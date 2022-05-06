@@ -3,10 +3,11 @@ package edu.upc.dsa.models;
 import edu.upc.dsa.util.RandomUtils;
 
 public class User {
-    String id;
-    String name;
-    String password;
-    String email;
+    private String id;
+    private String name;
+    private String password;
+    private String email;
+    private Integer coins;
 
     public User() {}
 
@@ -15,6 +16,7 @@ public class User {
         this.name = name;
         this.password = password;
         this.email = email;
+        this.coins = 0;
     }
 
     public String getId() {
@@ -49,4 +51,20 @@ public class User {
         this.email = email;
     }
 
+    public Integer getCoins() {
+        return coins;
+    }
+
+    public void setCoins(Integer coins) {
+        this.coins = coins;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "ID='" + this.id + '\'' +
+                ", username='" + this.name + '\'' +
+                ", password='" + this.password + '\'' +
+                ", email='" + this.email + '\'' +
+                '}';
+    }
 }

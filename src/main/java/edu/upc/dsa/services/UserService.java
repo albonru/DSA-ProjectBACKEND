@@ -29,7 +29,7 @@ public class UserService {
 
     // sign up NEW user
     @POST
-    @ApiOperation(value = "User sign up", notes = "username + password+ email")
+    @ApiOperation(value = "User sign up", notes = "username + password + email")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
             @ApiResponse(code = 500, message = "Validation Error")
@@ -57,8 +57,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("username") String username) {
 
-        User user = userManager.getUser(username);
-
+        User user = userManager.getUserByName(username);
         if (user == null) {
             return Response.status(404).build();
         } else {
@@ -95,7 +94,7 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response logInUser(String name, String password) {
 
-        User user = userManager.getUser(name);
+        User user = userManager.getUserByName(name);
         if ((name.isEmpty()) || (password.isEmpty()))
             return Response.status(500).build();
         else if (user == null)
@@ -109,7 +108,29 @@ public class UserService {
     }
 
     // actualize/modify/UPDATE user
+    @PUT
+    @ApiOperation(value = "Update User information", notes = "userName, password and email")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = User.class),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Validation Error")
+    })
+    @Path("/update/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUser(String id, String username, String password, String email) {
 
+        User oldUser = userManager.getUserById(id);
+        if (username.isEmpty() || password.isEmpty() || email.isEmpty())
+            return Response.status(500).build();
+        else {
+            if (oldUser == null) {
+                return Response.status(404).build();
+            } else {
+                userManager.updateUser(oldUser, username, password, email);
+                return Response.status(200).entity(oldUser).build();
+            }
+        }
+    }
 
     // DELETE user
     @DELETE
@@ -121,7 +142,7 @@ public class UserService {
     @Path("/delete/{username}")
     public Response deleteUser(@PathParam("name") String name) {
 
-        User user = userManager.getUser(name);
+        User user = userManager.getUserByName(name);
         if (!user.getId().isEmpty()) {
             userManager.deleteUser(name);
             return Response.status(200).entity(user).build();
