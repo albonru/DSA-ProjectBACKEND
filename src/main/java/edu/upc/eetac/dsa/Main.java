@@ -1,4 +1,4 @@
-package edu.upc.dsa;
+package edu.upc.eetac.dsa;
 
 import io.swagger.jaxrs.config.BeanConfig;
 import org.glassfish.grizzly.http.server.HttpServer;

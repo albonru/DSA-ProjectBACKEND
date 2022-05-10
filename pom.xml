@@ -97,7 +97,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>edu.upc.dsa.Main</mainClass>
+                    <mainClass>edu.upc.eetac.dsa.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,7 +1,7 @@
-package edu.upc.dsa.services;
+package edu.upc.eetac.dsa.services;
 
-import edu.upc.dsa.managers.UserManager;
-import edu.upc.dsa.models.User;
+import edu.upc.eetac.dsa.managers.UserManager;
+import edu.upc.eetac.dsa.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

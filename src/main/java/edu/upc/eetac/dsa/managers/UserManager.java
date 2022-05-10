@@ -1,6 +1,6 @@
-package edu.upc.dsa.managers;
+package edu.upc.eetac.dsa.managers;
 
-import edu.upc.dsa.models.User;
+import edu.upc.eetac.dsa.models.User;
 
 import java.util.List;
 
