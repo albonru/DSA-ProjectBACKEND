@@ -3,14 +3,14 @@ myStorage = window.localStorage;
 function signup() {
     var username = $('#register_username').val();
     var password = $('#register_password').val();
-    var m = $('#register_email').val();
+    var email = $('#register_email').val();
 
-    localStorage.setItem("loggedUser", username);
+    localStorage.setItem("activeUser", username);
 
     $.ajax({
             contentType: "application/json",
             type: 'POST',
-            url: "/dsaApp/addUser",
+            url: "/dsaApp/user",
             data: JSON.stringify({username: username, password: password, email: email}),
             dataType: 'json',
             success: function (result) {
@@ -21,6 +21,7 @@ function signup() {
                 alert("You left something blank. Please try again!");
             else
                 alert("Username or email already already in use. Please try again!");
+            window.location.href = "signup.html";
             }
         });
 }
@@ -29,12 +30,12 @@ function login() {
     var username = $('#login_username').val();
     var password = $('#login_password').val();
 
-    localStorage.setItem("loggedUser", username);
+    localStorage.setItem("activeUser", username);
 
      $.ajax({
             contentType: "application/json",
             type: 'POST',
-            url: "/dsaApp/logIn",
+            url: "/dsaApp/user/logIn",
             data: JSON.stringify({name: username, password: password}),
             dataType: 'json',
             success: function (result) {
@@ -46,14 +47,32 @@ function login() {
                 else
                     alert("Wrong Username or Password, please try again!");
             }
+            window.location.href = "login.html";
         });
 }
 
 function logout() {
-    localStorage.setItem("loggedUser", null);
+    localStorage.setItem("activeUser", null);
     alert('Come back soon!');
     window.location.href = "index.html";
 }
 
-function storeSetUp() {
+function updateUser() {
+
+}
+
+function deleteUser() {
+
+}
+
+function getStore() {
+
+}
+
+function buyItem() {
+
+}
+
+function getInventory() {
+
 }

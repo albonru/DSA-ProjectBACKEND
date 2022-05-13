@@ -1,10 +1,10 @@
-package edu.upc.eetac.dsa.managers;
+package edu.upc.eetac.dsa.dao;
 
 import edu.upc.eetac.dsa.models.User;
 
 import java.util.List;
 
-public interface UserManager {
+public interface UserDAO {
     public void addUser(String name, String password, String email);
     public User updateUser(User oldUser, String name, String password, String email);
     public User getUserByName(String name);

@@ -1,6 +1,6 @@
 package edu.upc.eetac.dsa.services;
 
-import edu.upc.eetac.dsa.managers.UserManager;
+import edu.upc.eetac.dsa.dao.UserDAO;
 import edu.upc.eetac.dsa.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +16,7 @@ import java.util.List;
 @Api(value = "/user", description = "Endpoint to User Service")
 @Path("/user")
 public class UserService {
-    private UserManager userManager;
+    private UserDAO userManager;
 
     public UserService() {}
 

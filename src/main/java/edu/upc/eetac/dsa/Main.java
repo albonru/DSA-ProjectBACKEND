@@ -12,7 +12,7 @@ import java.net.URI;
 
 public class Main {
     // Base URI the Grizzly HTTP server will listen on
-    public static final String BASE_URI = "http://147.83.7.206:8080/dsaApp/";
+    public static final String BASE_URI = "http://127.0.0.1:8080/dsaApp/";
     ///// Parameters to modify: BASE_URI, setHost and public\swagger\index.html(url:)
     // Development: localhost:8080
     // Production: 147.83.7.206:8080
@@ -55,7 +55,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         final HttpServer server = startServer();
 
-        StaticHttpHandler staticHttpHandler = new StaticHttpHandler("./public/");
+        StaticHttpHandler staticHttpHandler = new StaticHttpHandler("./web/");
         server.getServerConfiguration().addHttpHandler(staticHttpHandler, "/");
 
 
