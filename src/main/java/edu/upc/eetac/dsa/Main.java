@@ -12,9 +12,9 @@ import java.net.URI;
 
 public class Main {
     // Base URI the Grizzly HTTP server will listen on
-    public static final String BASE_URI = "http://127.0.0.1:8080/dsaApp/";
-    ///// Parameters to modify: BASE_URI, setHost and public\swagger\index.html(url:)
-    // Development: localhost:8080
+    public static final String BASE_URI = "http://127.0.0.1/dsaApp/";
+    // Parameters to modify: BASE_URI, setHost and public\swagger\index.html(url:)
+    // Development: localhost:8080 o 127.0.0.1:8080
     // Production: 147.83.7.206:8080
 
     /**
@@ -30,7 +30,7 @@ public class Main {
         rc.register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
         BeanConfig beanConfig = new BeanConfig();
 
-        beanConfig.setHost("147.83.7.206:8080");
+        beanConfig.setHost("127.0.0.1:8080");
         beanConfig.setBasePath("/dsaApp");
         beanConfig.setContact("support@example.com");
         beanConfig.setDescription("REST API for Game Manager");
@@ -55,7 +55,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         final HttpServer server = startServer();
 
-        StaticHttpHandler staticHttpHandler = new StaticHttpHandler("./web/");
+        StaticHttpHandler staticHttpHandler = new StaticHttpHandler("./public/");
         server.getServerConfiguration().addHttpHandler(staticHttpHandler, "/");
 
 

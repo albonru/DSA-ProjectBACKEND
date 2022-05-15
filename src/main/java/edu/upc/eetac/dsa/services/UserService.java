@@ -78,7 +78,7 @@ public class UserService {
 
         List<User> userList = this.userManager.getAllUsers();
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(userList) {};
-        return Response.status(200).entity(entity).build()  ;
+        return Response.status(200).entity(entity).build();
     }
 
     // LOGIN user
@@ -115,18 +115,18 @@ public class UserService {
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 500, message = "Validation Error")
     })
-    @Path("/update/{id}")
+    @Path("/update/{oldUsername}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(String id, String username, String password, String email) {
+    public Response updateUser(String oldUsername, String username, String password, String email) {
 
-        User oldUser = userManager.getUserById(id);
+        User oldUser = userManager.getUserByName(oldUsername);
         if (username.isEmpty() || password.isEmpty() || email.isEmpty())
             return Response.status(500).build();
         else {
             if (oldUser == null) {
                 return Response.status(404).build();
             } else {
-                userManager.updateUser(oldUser, username, password, email);
+                userManager.updateUser(oldUsername, username, password, email);
                 return Response.status(200).entity(oldUser).build();
             }
         }
