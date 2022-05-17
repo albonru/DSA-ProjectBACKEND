@@ -8,7 +8,7 @@ function signup() {
     $.ajax({
             contentType: "application/json",
             type: 'POST',
-            url: "/dsaApp/user",
+            url: "/dsaApp/user/addUser/"+username+"/"+password+"/"+email,
             data: JSON.stringify({username: username, password: password, email: email}),
             dataType: 'json',
             success: function (result) {
@@ -33,7 +33,7 @@ function login() {
      $.ajax({
             contentType: "application/json",
             type: 'POST',
-            url: "/dsaApp/user/logIn",
+            url: "/dsaApp/user/logIn/"+username+"/"+password,
             data: JSON.stringify({name: username, password: password}),
             dataType: 'json',
             success: function (result) {
@@ -66,7 +66,7 @@ function updateUser() {
     $.ajax({
             contentType: "application/json",
             type: 'PUT',
-            url: "/dsaApp/user",
+            url: "/dsaApp/user/update/"+oldUsername+"/"+username+"/"+password+"/"+email,
             data: JSON.stringify({oldUsername: oldUsername, username: username, password: password, email: email}),
             dataType: 'json',
             success: function (result) {
@@ -79,6 +79,7 @@ function updateUser() {
                     alert("You left something blank. Please try again!");
                 else
                     alert("Username or email already in use. Please try again!");
+                    window.location.href = "userProfile.html";
             }
     });
 }
@@ -89,7 +90,7 @@ function deleteUser() {
     $.ajax({
             contentType: "application/json",
             type: 'DELETE',
-            url: "/dsaApp/user",
+            url: "/dsaApp/user/"+username,
             data: JSON.stringify({username: username}),
             dataType: 'json',
             success: function (result) {
@@ -99,12 +100,26 @@ function deleteUser() {
             },
             error : function(error) {
                 alert("User could not be deleted. Please try again later!");
+                window.location.href = "userProfile.html";
             }
     });
 }
 
+// INCOMPLETE
 function setUpStore() {
-
+    $.ajax({
+            contentType: "application/json",
+            type: 'GET',
+            url: "/dsaApp/storeList/"+item+"/"+username,
+            data: JSON.stringify({item: item, username: username}),
+            dataType: 'json',
+            success: function (result) {
+                // tallar llista i crear tenda
+            },
+            error : function(error) {
+                 alert('Store set up failed. Please try again later!');
+            }
+    });
 }
 
 //INCOMPLETE
@@ -115,8 +130,8 @@ function buyItem() {
     $.ajax({
             contentType: "application/json",
             type: 'PUT',
-            url: "/dsaApp/item/buyItem/" + item,
-            data: JSON.stringify({item: item, username: user}),
+            url: "/dsaApp/item/buyItem/"+item+"/"+username,
+            data: JSON.stringify({item: item, username: username}),
             dataType: 'json',
             success: function (result) {
                 alert("Successfully purchased " + item);
@@ -129,13 +144,13 @@ function buyItem() {
 
 //INCOMPLETE
 function getInventory() {
-    var user = localStorage.getItem("activeUser");
+    var username = localStorage.getItem("activeUser");
 
     $.ajax({
             contentType: "application/json",
             type: 'GET',
-            url: "/dsaApp/item/inventoryList/" + user,
-            data: JSON.stringify({username: user}),
+            url: "/dsaApp/item/inventoryList/" + username,
+            data: JSON.stringify({username: username}),
             dataType: 'json',
             success: function (result) {
                 //tallar llista i visualització

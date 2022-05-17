@@ -13,6 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "/item", description = "Endpoint to Item Service")
@@ -22,7 +23,9 @@ public class ItemService {
     private ItemDAO itemManager;
     private UserDAO userManager;
 
-    public ItemService() {}
+    public ItemService() {
+
+    }
 
     @Path("basic")
     @GET
@@ -77,9 +80,9 @@ public class ItemService {
             @ApiResponse(code = 405, message = "Item not found"),
             @ApiResponse(code = 409, message = "Item is already in possession")
     })
-    @Path("/buyItem/{itemName}")
+    @Path("/buyItem/{itemName}/{username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buyItem(@PathParam("item") String item, String username) {
+    public Response buyItem(@PathParam("item") String item, @PathParam("username") String username) {
 
 
         return null;
