@@ -2,12 +2,15 @@ package edu.upc.eetac.dsa.models;
 
 import edu.upc.eetac.dsa.util.RandomUtils;
 
+import java.util.LinkedList;
+
 public class User {
     private String id;
     private String name;
     private String password;
     private String email;
     private Integer coins;
+    private LinkedList<Item> userItemList = null;
 
     public User() {}
 
@@ -17,6 +20,7 @@ public class User {
         this.password = password;
         this.email = email;
         this.coins = 0;
+        this.userItemList = new LinkedList<>();
     }
 
     public String getId() {
@@ -58,6 +62,10 @@ public class User {
     public void setCoins(Integer coins) {
         this.coins = coins;
     }
+
+    public LinkedList<Item> getUserItemList() { return userItemList; }
+
+    public void setUserItemList(Item item) { this.userItemList.add(item); }
 
     @Override
     public String toString() {
