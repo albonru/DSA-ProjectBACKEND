@@ -29,7 +29,8 @@ public class ItemDAOImpl implements ItemDAO {
     @Override
     public List<Item> getInventory(String username) {
 
-        User u = userManager.getUserByName(username); return u.getUserItemList();
+        User u = userManager.getUserByName(username);
+        return u.getInventory();
     }
 
     @Override
@@ -38,13 +39,14 @@ public class ItemDAOImpl implements ItemDAO {
         return this.storeList;
     }
 
+    // INCOMPLETE
     @Override
     public void buyItem(String item, String username) {
 
         User u = userManager.getUserByName(username);
         Item i = getItemByName(item);
 
-        u.setUserItemList(i);
+        u.setInventory(i);
     }
 
     @Override
@@ -57,5 +59,18 @@ public class ItemDAOImpl implements ItemDAO {
             }
         }
         return null;
+    }
+
+    @Override
+    public void addToStore(String itemName) {
+        Item item = this.getItemByName(itemName);
+        this.storeList.add(item);
+    }
+
+    @Override
+    public void addToUser(String username, String itemname) {
+        User user = this.userManager.getUserByName(username);
+        Item item = this.getItemByName(itemname);
+        user.addToInventory(item);
     }
 }

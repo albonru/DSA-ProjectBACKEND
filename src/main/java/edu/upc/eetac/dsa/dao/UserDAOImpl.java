@@ -25,7 +25,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void addUser(String name, String password, String email) {
+    public User addUser(String name, String password, String email) {
 
         User u1 = getUserByName(name);
         User u2 = getUserByEmail(email);
@@ -37,14 +37,17 @@ public class UserDAOImpl implements UserDAO {
         else {
             User u = new User(name, password, email);
             this.userList.add(u);
+            return u;
         }
+        return null;
     }
 
     @Override
     public User updateUser(String oldUsername, String name, String password, String email) {
 
         User u = getUserByName(oldUsername);
-        User u1 = getUserByName(name); User u2 = getUserByEmail(email);
+        User u1 = getUserByName(name);
+        User u2 = getUserByEmail(email);
 
         if(u1 != null) { showErrorName(); return null; }
 
