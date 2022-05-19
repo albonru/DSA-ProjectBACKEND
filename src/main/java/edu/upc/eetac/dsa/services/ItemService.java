@@ -1,7 +1,9 @@
 package edu.upc.eetac.dsa.services;
 
 import edu.upc.eetac.dsa.dao.ItemDAO;
+import edu.upc.eetac.dsa.dao.ItemDAOImpl;
 import edu.upc.eetac.dsa.dao.UserDAO;
+import edu.upc.eetac.dsa.dao.UserDAOImpl;
 import edu.upc.eetac.dsa.models.Item;
 import edu.upc.eetac.dsa.models.User;
 import io.swagger.annotations.Api;
@@ -20,11 +22,13 @@ import java.util.List;
 public class ItemService {
 
     private ItemDAO itemManager;
-    private UserDAO userManager;
+    //private UserDAO userManager;
 
     public ItemService() {
+        this.itemManager = ItemDAOImpl.getInstance();
+        //this.userManager = UserDAOImpl.getInstance();
         Item weapon = new Item("Gun","Ranged weapon",100,"Weapon",7,0);
-        Item armor = new Item("Shield","Slightly increaases defense",75,"Armor",0,10);
+        Item armor = new Item("Shield","Slightly increases defense",75,"Armor",0,10);
         Item skin = new Item("Luigi","Alter your appearance to look like Luigi",400,"Skin",0,0);
 
         this.itemManager.addToStore("Gun");
@@ -53,7 +57,7 @@ public class ItemService {
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(storeList) {};
         return Response.status(200).entity(entity).build();
     }
-
+/*
     //get ALL items from a user's inventory
     @GET
     @ApiOperation(value = "Get a particular User's inventory", notes = " ")
@@ -73,7 +77,7 @@ public class ItemService {
             GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(storeList) {};
             return Response.status(200).entity(entity).build();
         }
-    }
+    }*/
 
     // buy item from store A MITGES
     @PUT

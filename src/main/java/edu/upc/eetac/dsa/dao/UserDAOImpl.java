@@ -42,6 +42,7 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
+    // fa coses rares, duplica o crea nou en lloc de modificar
     @Override
     public User updateUser(String oldUsername, String name, String password, String email) {
 

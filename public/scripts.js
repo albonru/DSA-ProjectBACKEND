@@ -12,7 +12,7 @@ function signup() {
             data: JSON.stringify({username: username, password: password, email: email}),
             dataType: 'json',
             success: function (result) {
-                alert("Sign up completed. Nice to meet you!");
+                alert("Sign up completed. Nice to meet you, " + username);
                 localStorage.setItem("activeUser", username);
                 window.location.href = "userProfile.html";
             },
@@ -37,7 +37,7 @@ function login() {
             data: JSON.stringify({name: username, password: password}),
             dataType: 'json',
             success: function (result) {
-                alert("Login successful. Welcome back!");
+                alert("Login successful. Welcome back " + username);
                 localStorage.setItem("activeUser", username);
                 window.location.href = "userProfile.html";
             },

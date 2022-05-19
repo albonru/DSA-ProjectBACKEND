@@ -1,6 +1,7 @@
 package edu.upc.eetac.dsa.services;
 
 import edu.upc.eetac.dsa.dao.UserDAO;
+import edu.upc.eetac.dsa.dao.UserDAOImpl;
 import edu.upc.eetac.dsa.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +20,7 @@ public class UserService {
     private UserDAO userManager;
 
     public UserService() {
+        this.userManager = UserDAOImpl.getInstance();
         User testUser1 = new User("Irene","irene1234","irene@upc.com");
         User testUser2 = new User("Adrian", "adrian1234", "adrian@upc.com");
 
@@ -38,7 +40,7 @@ public class UserService {
     @ApiOperation(value = "User sign up", notes = "username + password + email")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response= User.class),
-            @ApiResponse(code = 402, message = "Username or email already in use", response= User.class),
+            @ApiResponse(code = 405, message = "Username or email already in use"),
             @ApiResponse(code = 500, message = "Validation Error")
 
     })
@@ -49,10 +51,13 @@ public class UserService {
         User user = new User(username, password, email);
         if (user.getName().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty())
             return Response.status(500).entity(user).build();
+
+        User namecheck = this.userManager.getUserByName(username);
+        User emailcheck = this.userManager.getUserByEmail(email);
+        if (namecheck != null || emailcheck != null)
+            return Response.status(405).entity(user).build();
+
         this.userManager.addUser(user.getName(), user.getEmail(), user.getPassword());
-        User newUser = userManager.getUserByName(username);
-        if(!newUser.getName().equals(user.getName()) || !newUser.getEmail().equals(user.getName()))
-            return Response.status(402).entity(user).build();
         return Response.status(200).entity(user).build();
     }
 
@@ -80,7 +85,7 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get all signed up Users", notes = " ")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = User.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
     })
     @Path("/userList")
     @Produces(MediaType.APPLICATION_JSON)
@@ -88,7 +93,7 @@ public class UserService {
 
         List<User> userList = this.userManager.getAllUsers();
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(userList) {};
-        return Response.status(200).entity(entity).build();
+        return Response.status(201).entity(entity).build();
     }
 
     // LOGIN user
