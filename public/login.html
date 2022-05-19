@@ -7,38 +7,44 @@
   <link rel="stylesheet" href="./css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-    <div 
-        class="  d-flex justify-content-center align-items-center bg-image" style="background-image: url(https://i.pinimg.com/originals/c8/ab/28/c8ab287916512eaf2b1cf7afe4a39c63.png); height: 100vh;">
-           
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
-            <!--header-->
-            <div 
-                class="container-fluid pt-5 border bg-danger text-white  ">
-                <h1 class=" display-1 text-center">Log In</h1>
-            </div>
-        <!--login -->
+          <a class="navbar-brand" href="javascript:void(0)">MARIO BROS</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html" href="javascript:void(0)">Index</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="signup.html" href="javascript:void(0)">Register</a>
+              </li>
+            </ul>
+          </div>
+          
+        </div>
+      </nav>
+
+    <div class="container-fluid">
+        <h2>Login</h2>
+        <h5>Introdueix el teu usuari i contrasenya</h5>
         <div class="row">
             <div 
-                ><input type="text" class="form-control" id="login_username" placeholder="Username">
+                ><input type="text" class="form-control" id="login_user" placeholder="UserName">
             </div>
             <div
                 ><input type="text" class="form-control" id="login_password" placeholder="Password"></div>
             </div>
             <div 
-            class="col-md-4"><button type="button" id ="buttonS" class="btn btn-primary btn-warning" onclick="login()">Log In</button>
-            </div>
-
-            <br>
-            Don't have an account?
-            </br>
-            <div class="container">
-                <a href="signup.html"><input type="submit" value="Click here to Sign Up" class="button"></a>
+                class="col-md-4"><button type="btn" id ="buttonS" class="btn btn-primary btn-warning" onclick="login()">Login</button>
             </div>
         </div>
     </div>
-
 
 </body>
 </html>
