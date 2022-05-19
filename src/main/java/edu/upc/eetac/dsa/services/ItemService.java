@@ -13,7 +13,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "/item", description = "Endpoint to Item Service")
@@ -24,7 +23,13 @@ public class ItemService {
     private UserDAO userManager;
 
     public ItemService() {
+        Item weapon = new Item("Gun","Ranged weapon",100,"Weapon",7,0);
+        Item armor = new Item("Shield","Slightly increaases defense",75,"Armor",0,10);
+        Item skin = new Item("Luigi","Alter your appearance to look like Luigi",400,"Skin",0,0);
 
+        this.itemManager.addToStore("Gun");
+        this.itemManager.addToStore("Shield");
+        this.itemManager.addToStore("Luigi");
     }
 
     @Path("basic")

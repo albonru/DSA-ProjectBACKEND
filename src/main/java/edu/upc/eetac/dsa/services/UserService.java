@@ -11,7 +11,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "/user", description = "Endpoint to User Service")
@@ -39,6 +38,7 @@ public class UserService {
     @ApiOperation(value = "User sign up", notes = "username + password + email")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response= User.class),
+            @ApiResponse(code = 402, message = "Username or email already in use", response= User.class),
             @ApiResponse(code = 500, message = "Validation Error")
 
     })
@@ -50,6 +50,9 @@ public class UserService {
         if (user.getName().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty())
             return Response.status(500).entity(user).build();
         this.userManager.addUser(user.getName(), user.getEmail(), user.getPassword());
+        User newUser = userManager.getUserByName(username);
+        if(!newUser.getName().equals(user.getName()) || !newUser.getEmail().equals(user.getName()))
+            return Response.status(402).entity(user).build();
         return Response.status(200).entity(user).build();
     }
 
