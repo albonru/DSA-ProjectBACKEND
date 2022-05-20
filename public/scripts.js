@@ -1,9 +1,7 @@
-myStorage = window.localStorage;
-
-function signup() {
-    var username = $('#register_username').val();
-    var password = $('#register_password').val();
-    var email = $('#register_email').val();
+/*function signup() {
+    var username = $('#signup_username').val();
+    var password = $('#signup_password').val();
+    var email = $('#signup_email').val();
 
     $.ajax({
             contentType: "application/json",
@@ -30,6 +28,8 @@ function login() {
     var username = $('#login_username').val();
     var password = $('#login_password').val();
 
+    window.alert("Entraste en js login()");
+
      $.ajax({
             contentType: "application/json",
             type: 'POST',
@@ -49,7 +49,7 @@ function login() {
                 //window.location.href = "login.html";
             }
      });
-}
+}*/
 
 function logout() {
     localStorage.setItem("activeUser", null);

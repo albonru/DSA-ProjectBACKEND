@@ -2,7 +2,9 @@ package edu.upc.eetac.dsa.services;
 
 import edu.upc.eetac.dsa.dao.UserDAO;
 import edu.upc.eetac.dsa.dao.UserDAOImpl;
+import edu.upc.eetac.dsa.models.LogInCredentials;
 import edu.upc.eetac.dsa.models.User;
+import edu.upc.eetac.dsa.models.SignUpCredentials;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -44,16 +46,16 @@ public class UserService {
             @ApiResponse(code = 500, message = "Validation Error")
 
     })
-    @Path("/addUser/{username}/{password}/{email}")
+    @Path("/addUser")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response userSignUp(@PathParam("username") String username, @PathParam("password") String password, @PathParam("email") String email) {
+    public Response userSignUp(SignUpCredentials userCred) {
 
-        User user = new User(username, password, email);
+        User user = new User(userCred.getUsername(), userCred.getPassword(), userCred.getEmail());
         if (user.getName().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty())
             return Response.status(500).entity(user).build();
 
-        User namecheck = this.userManager.getUserByName(username);
-        User emailcheck = this.userManager.getUserByEmail(email);
+        User namecheck = this.userManager.getUserByName(userCred.getUsername());
+        User emailcheck = this.userManager.getUserByEmail(userCred.getEmail());
         if (namecheck != null || emailcheck != null)
             return Response.status(405).entity(user).build();
 
@@ -103,19 +105,19 @@ public class UserService {
             @ApiResponse(code = 200, message = "Successful", response = User.class),
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 405, message = "Wrong password"),
-            @ApiResponse(code = 500, message = "Invalid inputs")
+            @ApiResponse(code = 500, message = "Invalid credentials")
     })
-    @Path("/logIn/{username}/{password}")
+    @Path("/logIn")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response logInUser(@PathParam("username") String username, @PathParam("password")String password) {
+    public Response logInUser(LogInCredentials userCred) {
 
-        User user = userManager.getUserByName(username);
-        if ((username.isEmpty()) || (password.isEmpty()))
+        User user = userManager.getUserByName(userCred.getUsername());
+        if ((userCred.getUsername().isEmpty()) || (userCred.getPassword().isEmpty()))
             return Response.status(500).build();
         else if (user == null)
             return Response.status(404).build();
         else {
-            if (user.getPassword().equals(password))
+            if (user.getPassword().equals(userCred.getPassword()))
                 return Response.status(200).entity(user).build();
             else
                 return Response.status(405).build();
