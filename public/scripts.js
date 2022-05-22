@@ -49,7 +49,7 @@ function login() {
                 //window.location.href = "login.html";
             }
      });
-}*/
+}
 
 function logout() {
     localStorage.setItem("activeUser", null);
@@ -159,4 +159,4 @@ function getInventory() {
                  alert('Could not fetch inventory. Please try again later!');
             }
     });
-}
+}*/

@@ -20,7 +20,7 @@ public class User {
         this.password = password;
         this.email = email;
         this.coins = 0;
-        this.inventory = new LinkedList<>();
+        this.inventory = new LinkedList<Item>();
     }
 
     public String getId() {
@@ -63,7 +63,7 @@ public class User {
         this.coins = coins;
     }
 
-    public LinkedList<Item> getInventory() { return inventory; }
+    public LinkedList<Item> getInventory() { return this.inventory; }
 
     public void setInventory(Item item) { this.inventory.add(item); }
 

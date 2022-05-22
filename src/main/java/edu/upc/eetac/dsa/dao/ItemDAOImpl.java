@@ -11,6 +11,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     UserDAOImpl userManager;
     LinkedList<Item> storeList = new LinkedList<>();
+    LinkedList<Item> itemList = new LinkedList<>();
 
     static final Logger logger = Logger.getLogger(ItemDAOImpl.class.getName());
     private static ItemDAOImpl manager;
@@ -26,6 +27,7 @@ public class ItemDAOImpl implements ItemDAO {
         return manager;
     }
 
+    // NO FUNCIONA
     @Override
     public List<Item> getInventory(String username) {
 
@@ -33,13 +35,13 @@ public class ItemDAOImpl implements ItemDAO {
         return u.getInventory();
     }
 
+    // FUNCIONA
     @Override
     public List<Item> getStoreList() {
-
         return this.storeList;
     }
 
-    // INCOMPLETE
+    // INCOMPLETO
     @Override
     public void buyItem(String item, String username) {
 
@@ -49,10 +51,11 @@ public class ItemDAOImpl implements ItemDAO {
         u.setInventory(i);
     }
 
+    // FUNCIONA
     @Override
     public Item getItemByName(String name) {
 
-        for (Item i: this.storeList) {
+        for (Item i: this.itemList) {
 
             if(i.getName().equals(name)) {
                 return i;
@@ -61,12 +64,22 @@ public class ItemDAOImpl implements ItemDAO {
         return null;
     }
 
-    @Override
-    public void addToStore(String itemName) {
-        Item item = this.getItemByName(itemName);
-        this.storeList.add(item);
+    public Item addItem(Item item) {
+        this.itemList.add(item);
+        return item;
     }
 
+    // FUNCIONA
+    @Override
+    public Item addToStore(String itemName) {
+        Item item = this.getItemByName(itemName);
+        if (item == null)
+            return null;
+        this.storeList.add(item);
+        return item;
+    }
+
+    // NO FUNCIONA
     @Override
     public void addToUser(String username, String itemname) {
         User user = this.userManager.getUserByName(username);

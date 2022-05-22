@@ -37,7 +37,7 @@ public class UserService {
         return "Got it!";
     }
 
-    // sign up NEW user
+    // sign up NEW user --> FUNCIONA
     @POST
     @ApiOperation(value = "User sign up", notes = "username + password + email")
     @ApiResponses(value = {
@@ -63,7 +63,7 @@ public class UserService {
         return Response.status(200).entity(user).build();
     }
 
-    // get ONE particular user
+    // get ONE particular user --> FUNCIONA
     @GET
     @ApiOperation(value = "Get a particular User", notes = "username")
     @ApiResponses(value = {
@@ -83,7 +83,7 @@ public class UserService {
         }
     }
 
-    // get ALL signed up users
+    // get ALL signed up users --> FUNCIONA
     @GET
     @ApiOperation(value = "Get all signed up Users", notes = " ")
     @ApiResponses(value = {
@@ -98,7 +98,7 @@ public class UserService {
         return Response.status(201).entity(entity).build();
     }
 
-    // LOGIN user
+    // LOGIN user --> FUNCIONA
     @POST
     @ApiOperation(value = "LogIn User", notes = "Name and Password")
     @ApiResponses(value = {
@@ -124,7 +124,7 @@ public class UserService {
         }
     }
 
-    // actualize/modify/UPDATE user
+    // actualize/modify/UPDATE user --> NO FUNCIONA
     @PUT
     @ApiOperation(value = "Update User information", notes = "userName, password and email")
     @ApiResponses(value = {
@@ -132,24 +132,24 @@ public class UserService {
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 500, message = "Validation Error")
     })
-    @Path("/update/{oldUsername}/{username}/{password}/{email}")
+    @Path("/update/{oldUsername}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(@PathParam("oldUsername") String oldUsername, @PathParam("username") String username, @PathParam("password") String password, @PathParam("email") String email) {
+    public Response updateUser(@PathParam("oldUsername") String oldUsername, SignUpCredentials userCred) {
 
         User oldUser = userManager.getUserByName(oldUsername);
-        if (username.isEmpty() || password.isEmpty() || email.isEmpty())
+        if (userCred.getUsername().isEmpty() || userCred.getPassword().isEmpty() || userCred.getEmail().isEmpty())
             return Response.status(500).build();
         else {
             if (oldUser == null) {
                 return Response.status(404).build();
             } else {
-                userManager.updateUser(oldUsername, username, password, email);
+                userManager.updateUser(oldUsername, userCred.getUsername(), userCred.getPassword(), userCred.getEmail());
                 return Response.status(200).entity(oldUser).build();
             }
         }
     }
 
-    // DELETE user
+    // DELETE user --> NO FUNCIONA
     @DELETE
     @ApiOperation(value = "Delete a User", notes = "Name")
     @ApiResponses(value = {
@@ -166,4 +166,7 @@ public class UserService {
         }
         return Response.status(404).build();
     }
+
+
+    // GET ranking by coins --> A MEDIAS
 }

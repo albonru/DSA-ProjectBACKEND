@@ -1,3 +1,5 @@
+<!-- LOGIN FUNCIONA -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,26 +50,22 @@
                     var username = $('#login_username').val();
                     var password = $('#login_password').val();
 
-                    window.alert("Entraste en js login()");
-                    window.alert("Username: "+username+" and Password: "+ password);
-
                      $.ajax({
                         contentType: "application/json",
                         type: 'POST',
-                        url: 'http://localhost:8080/dsaApp/user/logIn',
+                        url: '/dsaApp/user/logIn',
                         data: JSON.stringify({"username": username, "password": password}),
                         dataType: 'json',
                         success: function (result) {
-                            alert("Login successful. Welcome back " + username);
+                            alert("Login successful. Welcome back, " + username);
                             localStorage.setItem("activeUser", username);
                             window.location.href = "userProfile.html";
                         },
                      error : function(error) {
-                        alert(error.status);
                          if (username == "" || password == "")
-                             alert("You left something blank, please try again!");
-                          else
-                             alert("Wrong Username or Password, please try again!");
+                            alert("You left something blank, please try again!");
+                         else
+                            alert("Wrong Username or Password, please try again!");
                            //window.location.href = "login.html";
                      }
                });

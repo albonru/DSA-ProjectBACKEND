@@ -24,25 +24,25 @@ public class UserDAOImpl implements UserDAO {
         return manager;
     }
 
+    // FUNCIONA
     @Override
     public User addUser(String name, String password, String email) {
 
         User u1 = getUserByName(name);
         User u2 = getUserByEmail(email);
 
-        if(u1 != null) { showErrorName(); }
+        if(u1 != null) { return null; }
 
-        else if(u2 != null) { showErrorEmail(); }
+        else if(u2 != null) { return null; }
 
         else {
             User u = new User(name, password, email);
             this.userList.add(u);
             return u;
         }
-        return null;
     }
 
-    // fa coses rares, duplica o crea nou en lloc de modificar
+    // NO FUNCIONA
     @Override
     public User updateUser(String oldUsername, String name, String password, String email) {
 
@@ -50,9 +50,9 @@ public class UserDAOImpl implements UserDAO {
         User u1 = getUserByName(name);
         User u2 = getUserByEmail(email);
 
-        if(u1 != null) { showErrorName(); return null; }
+        if(u1 != null) { return null; }
 
-        else if(u2 != null) { showErrorEmail(); return null; }
+        else if(u2 != null) { return null; }
 
         else {
             u.setName(name); u.setPassword(password); u.setEmail(email);
@@ -60,6 +60,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    // FUNCIONA
     @Override
     public User getUserByName(String name) {
 
@@ -72,6 +73,7 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
+    // FUNCIONA
     @Override
     public User getUserByEmail(String email) {
 
@@ -84,6 +86,7 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
+    // FUNCIONA
     @Override
     public User getUserById(String id) {
 
@@ -96,20 +99,18 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
+    // FUNCIONA
     @Override
     public List<User> getAllUsers() {
 
         return this.userList;
     }
 
+    // NO FUNCIONA
     @Override
     public void deleteUser(String name) {
 
         User u = getUserByName(name);
         this.userList.remove(u);
     }
-
-    public void showErrorName() { logger.info("An user with the same name already exist."); }
-
-    public void showErrorEmail() { logger.info("An user with the same email already exist."); }
 }

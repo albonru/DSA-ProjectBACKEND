@@ -78,4 +78,17 @@ public class Item {
     public void setDmgReduction(int dmgReduction) {
         this.dmgReduction = dmgReduction;
     }
+
+    @Override
+    public String toString() {
+        return "Item{ID: "+ this.id + '\'' +
+                ", name ='" + this.name + '\'' +
+                ", type ='" + this.type + '\'' +
+                ", price ='" + this.price + '\'' +
+                ", description ='" + this.description + '\'' +
+                ", damage ='" + this.damage + '\'' +
+                ", dmgReduction ='" + this.dmgReduction + '\'' +
+                '}';
+
+    }
 }

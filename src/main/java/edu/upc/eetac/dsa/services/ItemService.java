@@ -22,18 +22,25 @@ import java.util.List;
 public class ItemService {
 
     private ItemDAO itemManager;
-    //private UserDAO userManager;
+    private UserDAO userManager;
 
     public ItemService() {
         this.itemManager = ItemDAOImpl.getInstance();
-        //this.userManager = UserDAOImpl.getInstance();
+        this.userManager = UserDAOImpl.getInstance();
         Item weapon = new Item("Gun","Ranged weapon",100,"Weapon",7,0);
         Item armor = new Item("Shield","Slightly increases defense",75,"Armor",0,10);
         Item skin = new Item("Luigi","Alter your appearance to look like Luigi",400,"Skin",0,0);
 
-        this.itemManager.addToStore("Gun");
-        this.itemManager.addToStore("Shield");
-        this.itemManager.addToStore("Luigi");
+        this.itemManager.addItem(weapon);
+        this.itemManager.addItem(armor);
+        this.itemManager.addItem(skin);
+
+        this.itemManager.addToStore(weapon.getName());
+        this.itemManager.addToStore(armor.getName());
+        this.itemManager.addToStore(skin.getName());
+
+        //this.itemManager.addToUser("Irene", "Gun");
+
     }
 
     @Path("basic")
@@ -43,7 +50,7 @@ public class ItemService {
         return "Got it!";
     }
 
-    // get ALL items from the store
+    // get ALL items from the store --> FUNCIONA
     @GET
     @ApiOperation(value = "Get all items in store", notes = " ")
     @ApiResponses(value = {
@@ -57,8 +64,8 @@ public class ItemService {
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(storeList) {};
         return Response.status(200).entity(entity).build();
     }
-/*
-    //get ALL items from a user's inventory
+
+    //get ALL items from a user's inventory --> NO FUNCIONA
     @GET
     @ApiOperation(value = "Get a particular User's inventory", notes = " ")
     @ApiResponses(value = {
@@ -77,9 +84,9 @@ public class ItemService {
             GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(storeList) {};
             return Response.status(200).entity(entity).build();
         }
-    }*/
+    }
 
-    // buy item from store A MITGES
+    // buy item from store --> A MEDIAS
     @PUT
     @ApiOperation(value = "Buy an Item", notes = " ")
     @ApiResponses(value = {

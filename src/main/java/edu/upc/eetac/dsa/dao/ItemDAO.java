@@ -9,6 +9,7 @@ public interface ItemDAO {
     public List<Item> getInventory(String username);
     public void buyItem(String item, String username);
     public Item getItemByName(String name);
-    public void addToStore(String item);
+    public Item addItem(Item item);
+    public Item addToStore(String item);
     public void addToUser(String username, String itemname);
 }
