@@ -59,7 +59,7 @@ public class UserService {
         if (namecheck != null || emailcheck != null)
             return Response.status(405).entity(user).build();
 
-        this.userManager.addUser(user.getName(), user.getEmail(), user.getPassword());
+        this.userManager.addUser(user.getName(), user.getPassword(), user.getEmail());
         return Response.status(200).entity(user).build();
     }
 
