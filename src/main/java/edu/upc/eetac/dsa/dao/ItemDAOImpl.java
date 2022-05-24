@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public class ItemDAOImpl implements ItemDAO {
 
-    UserDAOImpl userManager;
+    UserDAOImpl userManager = new UserDAOImpl();
     LinkedList<Item> storeList = new LinkedList<>();
     LinkedList<Item> itemList = new LinkedList<>();
 
@@ -48,7 +48,7 @@ public class ItemDAOImpl implements ItemDAO {
         User u = userManager.getUserByName(username);
         Item i = getItemByName(item);
 
-        u.setInventory(i);
+        u.addToInventory(i);
     }
 
     // FUNCIONA

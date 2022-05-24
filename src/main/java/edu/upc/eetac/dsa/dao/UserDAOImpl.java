@@ -13,7 +13,7 @@ public class UserDAOImpl implements UserDAO {
     static final Logger logger = Logger.getLogger(UserDAOImpl.class.getName());
     private static UserDAOImpl manager;
 
-    private  UserDAOImpl() {}
+    UserDAOImpl() {}
 
     public static UserDAOImpl getInstance() {
 

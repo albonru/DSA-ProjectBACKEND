@@ -39,7 +39,7 @@ public class ItemService {
         this.itemManager.addToStore(armor.getName());
         this.itemManager.addToStore(skin.getName());
 
-        //this.itemManager.addToUser("Irene", "Gun");
+        this.itemManager.addToUser("Irene", "Gun");
 
     }
 

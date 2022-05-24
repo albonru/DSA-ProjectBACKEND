@@ -63,9 +63,13 @@ public class User {
         this.coins = coins;
     }
 
-    public LinkedList<Item> getInventory() { return this.inventory; }
+    public LinkedList<Item> getInventory() {
+        return inventory;
+    }
 
-    public void setInventory(Item item) { this.inventory.add(item); }
+    public void setInventory(LinkedList<Item> inventory) {
+        this.inventory = inventory;
+    }
 
     @Override
     public String toString() {
