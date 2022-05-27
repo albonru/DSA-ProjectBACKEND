@@ -1,23 +1,21 @@
-package edu.upc.eetac.dsa.dao;
+package edu.upc.eetac.dsa.dao.impl;
+
+import edu.upc.eetac.dsa.dao.impl.SessionImpl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class FactorySession {
-    public static Session openSession() {
-
-        Connection conn = getConnection();
-
-        Session session = new SessionImpl(conn);
-
-        return session;
-    }
 
     private static Connection getConnection() {
         Connection conn = null;
+        Properties properties = new Properties();
+        properties.setProperty("user","root");
+        properties.setProperty("password","Mazinger72");
         try {
-            conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/mariodb","root","Mazinger72");
+            conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/mariodb",properties);
             System.out.println("Connected to the DB");
         } catch (SQLException ex) {
             // handle any errors

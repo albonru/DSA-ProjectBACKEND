@@ -1,9 +1,11 @@
 package edu.upc.eetac.dsa.services;
 
+import edu.upc.eetac.dsa.dao.InventoryDAO;
 import edu.upc.eetac.dsa.dao.ItemDAO;
-import edu.upc.eetac.dsa.dao.ItemDAOImpl;
+import edu.upc.eetac.dsa.dao.impl.InventoryDAOImpl;
+import edu.upc.eetac.dsa.dao.impl.ItemDAOImpl;
 import edu.upc.eetac.dsa.dao.UserDAO;
-import edu.upc.eetac.dsa.dao.UserDAOImpl;
+import edu.upc.eetac.dsa.dao.impl.UserDAOImpl;
 import edu.upc.eetac.dsa.models.Item;
 import edu.upc.eetac.dsa.models.User;
 import io.swagger.annotations.Api;
@@ -23,10 +25,13 @@ public class ItemService {
 
     private ItemDAO itemManager;
     private UserDAO userManager;
+    private InventoryDAO inventoryManager;
 
     public ItemService() {
         this.itemManager = ItemDAOImpl.getInstance();
         this.userManager = UserDAOImpl.getInstance();
+        this.inventoryManager = InventoryDAOImpl.getInstance();
+
         Item weapon = new Item("Gun","Ranged weapon",100,"Weapon",7,0);
         Item armor = new Item("Shield","Slightly increases defense",75,"Armor",0,10);
         Item skin = new Item("Luigi","Alter your appearance to look like Luigi",400,"Skin",0,0);
@@ -39,8 +44,8 @@ public class ItemService {
         this.itemManager.addToStore(armor.getName());
         this.itemManager.addToStore(skin.getName());
 
-        this.itemManager.addToUser("Irene", "Gun");
-
+        User user = this.userManager.getUserByName("Irene");
+        this.inventoryManager.addItem(weapon,user.getId());
     }
 
     @Path("basic")
@@ -80,8 +85,8 @@ public class ItemService {
         if (user == null) {
             return Response.status(404).build();
         } else {
-            List<Item> storeList = this.itemManager.getInventory(user.getName());
-            GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(storeList) {};
+            List<Item> inventory = this.inventoryManager.getUserInventory(user.getId());
+            GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(inventory) {};
             return Response.status(200).entity(entity).build();
         }
     }

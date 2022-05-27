@@ -1,5 +1,7 @@
-package edu.upc.eetac.dsa.dao;
+package edu.upc.eetac.dsa.dao.impl;
 
+import edu.upc.eetac.dsa.dao.ItemDAO;
+import edu.upc.eetac.dsa.dao.UserDAO;
 import edu.upc.eetac.dsa.models.Item;
 import edu.upc.eetac.dsa.models.User;
 
@@ -9,7 +11,7 @@ import java.util.logging.Logger;
 
 public class ItemDAOImpl implements ItemDAO {
 
-    UserDAOImpl userManager = new UserDAOImpl();
+    UserDAO userManager = UserDAOImpl.getInstance();
     LinkedList<Item> storeList = new LinkedList<>();
     LinkedList<Item> itemList = new LinkedList<>();
 
@@ -27,14 +29,6 @@ public class ItemDAOImpl implements ItemDAO {
         return manager;
     }
 
-    // NO FUNCIONA
-    @Override
-    public List<Item> getInventory(String username) {
-
-        User u = userManager.getUserByName(username);
-        return u.getInventory();
-    }
-
     // FUNCIONA
     @Override
     public List<Item> getStoreList() {
@@ -48,7 +42,7 @@ public class ItemDAOImpl implements ItemDAO {
         User u = userManager.getUserByName(username);
         Item i = getItemByName(item);
 
-        u.addToInventory(i);
+        //u.addToInventory(i);
     }
 
     // FUNCIONA
@@ -77,13 +71,5 @@ public class ItemDAOImpl implements ItemDAO {
             return null;
         this.storeList.add(item);
         return item;
-    }
-
-    // NO FUNCIONA
-    @Override
-    public void addToUser(String username, String itemname) {
-        User user = this.userManager.getUserByName(username);
-        Item item = this.getItemByName(itemname);
-        user.addToInventory(item);
     }
 }

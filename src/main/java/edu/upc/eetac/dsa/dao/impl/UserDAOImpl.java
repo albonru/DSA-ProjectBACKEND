@@ -1,5 +1,6 @@
-package edu.upc.eetac.dsa.dao;
+package edu.upc.eetac.dsa.dao.impl;
 
+import edu.upc.eetac.dsa.dao.UserDAO;
 import edu.upc.eetac.dsa.models.User;
 
 import java.util.LinkedList;

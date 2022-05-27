@@ -1,7 +1,9 @@
 package edu.upc.eetac.dsa.services;
 
+import edu.upc.eetac.dsa.dao.InventoryDAO;
 import edu.upc.eetac.dsa.dao.UserDAO;
-import edu.upc.eetac.dsa.dao.UserDAOImpl;
+import edu.upc.eetac.dsa.dao.impl.InventoryDAOImpl;
+import edu.upc.eetac.dsa.dao.impl.UserDAOImpl;
 import edu.upc.eetac.dsa.models.LogInCredentials;
 import edu.upc.eetac.dsa.models.User;
 import edu.upc.eetac.dsa.models.SignUpCredentials;
@@ -20,9 +22,12 @@ import java.util.List;
 @Path("/user")
 public class UserService {
     private UserDAO userManager;
+    private InventoryDAO inventoryManager;
 
     public UserService() {
         this.userManager = UserDAOImpl.getInstance();
+        this.inventoryManager = InventoryDAOImpl.getInstance();
+
         User testUser1 = new User("Irene","irene1234","irene@upc.com");
         User testUser2 = new User("Adrian", "adrian1234", "adrian@upc.com");
 

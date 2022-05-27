@@ -10,7 +10,7 @@ public class User {
     private String password;
     private String email;
     private Integer coins;
-    private LinkedList<Item> inventory = null;
+    private String inventoryId;
 
     public User() {}
 
@@ -20,7 +20,7 @@ public class User {
         this.password = password;
         this.email = email;
         this.coins = 0;
-        this.inventory = new LinkedList<Item>();
+        this.inventoryId = RandomUtils.getId();
     }
 
     public String getId() {
@@ -63,12 +63,12 @@ public class User {
         this.coins = coins;
     }
 
-    public LinkedList<Item> getInventory() {
-        return inventory;
+    public String getInventoryId() {
+        return inventoryId;
     }
 
-    public void setInventory(LinkedList<Item> inventory) {
-        this.inventory = inventory;
+    public void setInventoryId(String inventoryId) {
+        this.inventoryId = inventoryId;
     }
 
     @Override
@@ -78,10 +78,5 @@ public class User {
                 ", password='" + this.password + '\'' +
                 ", email='" + this.email + '\'' +
                 '}';
-    }
-
-    public void addToInventory(Item item) {
-
-        this.inventory.add(item);
     }
 }

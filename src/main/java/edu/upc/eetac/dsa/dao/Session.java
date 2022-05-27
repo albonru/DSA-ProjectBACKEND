@@ -3,14 +3,13 @@ package edu.upc.eetac.dsa.dao;
 import java.util.HashMap;
 import java.util.List;
 
-public interface Session {
-    void save(Object entity);
+public interface Session<E> {
+    void save(E entity);
     void close();
-    Object get(Class theClass, String id);
-    void update(Object object);
-    void delete(Object object);
-    List<Object> findAll(Class theClass);
-    List<Object> findAll(Class theClass, HashMap params);
-    List<Object> query(String query, Class theClass, HashMap params);
-    Object singleQuery(String query, Class theClass, HashMap params);
+    E get(E entity);
+    E getById(Class theClass, String id);
+    E getByName(Class theClass, String name);
+    List<E> getAll(Class theClass);
+    void update(E entity);
+    void delete(E entity);
 }
