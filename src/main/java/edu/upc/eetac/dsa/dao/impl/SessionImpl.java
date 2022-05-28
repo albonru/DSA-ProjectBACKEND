@@ -12,9 +12,18 @@ import java.util.List;
 public class SessionImpl<E> implements Session<E> {
 
     private final Connection conn;
+    private static SessionImpl instance;
 
     SessionImpl(Connection conn) {
         this.conn = conn;
+    }
+
+    public static SessionImpl getInstance(){
+        if(instance==null){
+            Connection conn = FactorySession.getConnection();
+            instance = new SessionImpl(conn);
+        }
+        return instance;
     }
 
     // FET
@@ -35,33 +44,6 @@ public class SessionImpl<E> implements Session<E> {
         } catch (SQLException | IntrospectionException e) {
             e.printStackTrace();
         }
-    }
-
-    // FET
-    @Override
-    public void close() {
-        try {
-            this.conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public E get(E entity) throws IntrospectionException {
-        String query = QueryHelper.createQuerySELECT(entity);
-        PreparedStatement pstm = null;
-        E res = null;
-
-        try {
-            pstm = conn.prepareStatement(query);
-
-            pstm.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return res;
     }
 
     // FET
@@ -168,6 +150,7 @@ public class SessionImpl<E> implements Session<E> {
         return null;
     }
 
+    // FET
     @Override
     public void update(E entity) throws IntrospectionException {
         String query = QueryHelper.createQueryUPDATE(entity);
@@ -176,10 +159,13 @@ public class SessionImpl<E> implements Session<E> {
         try {
             pstm = conn.prepareStatement(query);
 
-            int i = 0;
-
+            int i = 1;
+            for (String f: ObjectHelper.getFields(entity)) {
+                pstm.setObject(i++,ObjectHelper.getter(entity, f));
+            }
 
             pstm.executeQuery();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -194,6 +180,16 @@ public class SessionImpl<E> implements Session<E> {
         try {
             pstm = conn.prepareStatement(query);
             pstm.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // FET
+    @Override
+    public void close() {
+        try {
+            this.conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

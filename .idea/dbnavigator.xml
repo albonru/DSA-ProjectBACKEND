@@ -29,13 +29,40 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="3a7bd39c-eb24-468a-9309-b92a3062ef71">
-      <console name="Connection" type="STANDARD" schema="dsa" session="Main"><![CDATA[CREATE TABLE usuarios()
-Id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-Name VARCHAR(50) NOT NULL,
-password VARCHAR(50) NOT NULL,
-Email VARCHAR(50) NOT NULL ,
-Coins int NOT NULL 
-);]]></console>
+      <console name="Connection" type="STANDARD" schema="dsa" session="Main"><![CDATA[DROP DATABASE IF EXISTS mariodb;
+CREATE DATABASE mariodb;
+USE mariodb;
+
+CREATE TABLE User (
+    id VARCHAR(30) NOT NULL,
+    name VARCHAR(30) NOT NULL,
+    password VARCHAR(30) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    coins INT NOT NULL,
+    -- inventoryId VARCHAR(30) NOT NULL
+    PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+CREATE TABLE Item (
+    id VARCHAR(30) NOT NULL,
+    name VARCHAR(30) NOT NULL,
+    description VARCHAR(200) NOT NULL,
+    price INT NOT NULL,
+    type VARCHAR(20) NOT NULL,
+    damage INT,
+    dmgReduction INT,
+    PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+CREATE TABLE Inventory (
+    id VARCHAR(30) NOT NULL,
+    userId VARCHAR(30) NOT NULL,
+    -- itemID // itemList
+    FOREIGN KEY (userId) references User(id),
+    -- FOREIGN KEY () REFERENCES Item(id)
+) ENGINE = InnoDB;
+
+INSERT INTO User VALUES ('fq3rv42rv', 'Alba', '1234', 'alba@upc.com', 500);]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

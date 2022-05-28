@@ -1,8 +1,9 @@
 # Default ignored files
 /shelf/
-/.idea/workspace.xml
+/.idea/
 
 
 /public/css/
 /public/js/
 /target/
+

@@ -3,18 +3,19 @@ package edu.upc.eetac.dsa.dao.impl;
 import edu.upc.eetac.dsa.dao.UserDAO;
 import edu.upc.eetac.dsa.models.User;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.beans.IntrospectionException;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class UserDAOImpl implements UserDAO {
 
-    LinkedList<User> userList = new LinkedList<>();
-
     static final Logger logger = Logger.getLogger(UserDAOImpl.class.getName());
     private static UserDAOImpl manager;
+    private SessionImpl session;
 
-    UserDAOImpl() {}
+    UserDAOImpl() {
+        this.session = SessionImpl.getInstance();
+    }
 
     public static UserDAOImpl getInstance() {
 
@@ -25,93 +26,88 @@ public class UserDAOImpl implements UserDAO {
         return manager;
     }
 
-    // FUNCIONA
+    // FET
     @Override
     public User addUser(String name, String password, String email) {
-
-        User u1 = getUserByName(name);
-        User u2 = getUserByEmail(email);
-
-        if(u1 != null) { return null; }
-
-        else if(u2 != null) { return null; }
-
-        else {
-            User u = new User(name, password, email);
-            this.userList.add(u);
-            return u;
-        }
+        User user = new User(name, password, email);
+        session.save(user);
+        logger.info("Added new user: " + user.toString());
+        return user;
     }
 
-    // NO FUNCIONA
+    // FET
     @Override
-    public User updateUser(String oldUsername, String name, String password, String email) {
-
-        User u = getUserByName(oldUsername);
-        User u1 = getUserByName(name);
-        User u2 = getUserByEmail(email);
-
-        if(u1 != null) { return null; }
-
-        else if(u2 != null) { return null; }
-
-        else {
-            u.setName(name); u.setPassword(password); u.setEmail(email);
-            return u;
-        }
+    public User updateUser(String oldUsername, String name, String password, String email) throws IntrospectionException {
+        User user = (User) this.session.getByName(User.class, oldUsername);
+        //String id = user.getId();
+        user.setName(name);
+        user.setPassword(password);
+        user.setEmail(email);
+        this.session.update(user);
+        return user;
     }
 
-    // FUNCIONA
-    @Override
-    public User getUserByName(String name) {
-
-        for (User u: this.userList) {
-
-            if(u.getName().equals(name)) {
-                return u;
-            }
-        }
-        return null;
-    }
-
-    // FUNCIONA
-    @Override
-    public User getUserByEmail(String email) {
-
-        for (User u: this.userList) {
-
-            if(u.getEmail().equals(email)) {
-                return u;
-            }
-        }
-        return null;
-    }
-
-    // FUNCIONA
+    // FET
     @Override
     public User getUserById(String id) {
+        User user = (User) this.session.getById(User.class, id);
+        return user;
+    }
 
-        for (User u: this.userList) {
+    // FET
+    @Override
+    public User getUserByName(String name) {
+        User user = (User) this.session.getByName(User.class, name);
+        return user;
+    }
 
-            if(u.getId().equals(id)) {
-                return u;
-            }
+    // FET
+    @Override
+    public User getUserByEmail(String email) {
+        List<User> userList = this.getAllUsers();
+        for (User user : userList) {
+            if (user.getEmail().equals(email))
+                return user;
         }
         return null;
     }
 
-    // FUNCIONA
+    // FET
     @Override
     public List<User> getAllUsers() {
-
-        return this.userList;
+        List<User> userList = new LinkedList<>();
+        session.getAll(User.class).forEach(u -> userList.add((User) u));
+        return userList;
     }
 
-    // NO FUNCIONA
+    // FET
     @Override
-    public void deleteUser(String name) {
+    public List<String> getCoinRanking() {
+        List<User> userList = this.session.getAll(User.class);
+        List<String> usernames = new ArrayList<>();
 
-        User u = getUserByName(name);
-        this.userList.remove(u);
+        Collections.sort(userList, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                if (o1.getCoins() >= o2.getCoins())
+                    return 1;
+                if (o1.getCoins() < o2.getCoins())
+                    return -1;
+                return 0;
+            }
+        });
+
+        userList.forEach(u -> usernames.add(u.getName()));
+        return usernames;
     }
+
+    // FET
+    @Override
+    public void deleteUser(String name) throws IntrospectionException {
+        User u = (User) this.session.getByName(User.class, name);
+        session.delete(u);
+        logger.info("Deleted user: " + u.toString());
+    }
+
+
 }

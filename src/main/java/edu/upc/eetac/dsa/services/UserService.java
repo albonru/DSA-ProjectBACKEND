@@ -16,6 +16,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.beans.IntrospectionException;
 import java.util.List;
 
 @Api(value = "/user", description = "Endpoint to User Service")
@@ -27,12 +28,6 @@ public class UserService {
     public UserService() {
         this.userManager = UserDAOImpl.getInstance();
         this.inventoryManager = InventoryDAOImpl.getInstance();
-
-        User testUser1 = new User("Irene","irene1234","irene@upc.com");
-        User testUser2 = new User("Adrian", "adrian1234", "adrian@upc.com");
-
-        this.userManager.addUser(testUser1.getName(), testUser1.getPassword(), testUser1.getEmail());
-        this.userManager.addUser(testUser2.getName(), testUser2.getPassword(), testUser2.getEmail());
     }
 
     @Path("basic")
@@ -129,7 +124,7 @@ public class UserService {
         }
     }
 
-    // actualize/modify/UPDATE user --> NO FUNCIONA
+    // actualize/modify/UPDATE user --> FET
     @PUT
     @ApiOperation(value = "Update User information", notes = "userName, password and email")
     @ApiResponses(value = {
@@ -139,22 +134,20 @@ public class UserService {
     })
     @Path("/update/{oldUsername}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(@PathParam("oldUsername") String oldUsername, SignUpCredentials userCred) {
+    public Response updateUser(@PathParam("oldUsername") String oldUsername, SignUpCredentials userCred) throws IntrospectionException {
 
         User oldUser = userManager.getUserByName(oldUsername);
-        if (userCred.getUsername().isEmpty() || userCred.getPassword().isEmpty() || userCred.getEmail().isEmpty())
+        if ((userCred.getUsername().isEmpty()) || (userCred.getPassword().isEmpty()) || (userCred.getEmail().isEmpty()))
             return Response.status(500).build();
-        else {
-            if (oldUser == null) {
-                return Response.status(404).build();
-            } else {
-                userManager.updateUser(oldUsername, userCred.getUsername(), userCred.getPassword(), userCred.getEmail());
-                return Response.status(200).entity(oldUser).build();
-            }
+        else if (oldUser == null) {
+            return Response.status(404).build();
+        } else {
+            userManager.updateUser(oldUsername, userCred.getUsername(), userCred.getPassword(), userCred.getEmail());
+            return Response.status(200).entity(oldUser).build();
         }
     }
 
-    // DELETE user --> NO FUNCIONA
+    // DELETE user --> FET
     @DELETE
     @ApiOperation(value = "Delete a User", notes = "Name")
     @ApiResponses(value = {
@@ -162,16 +155,29 @@ public class UserService {
             @ApiResponse(code = 404, message = "User not found")
     })
     @Path("/delete/{username}")
-    public Response deleteUser(@PathParam("username") String username) {
+    public Response deleteUser(@PathParam("username") String username) throws IntrospectionException {
 
         User user = userManager.getUserByName(username);
-        if (!user.getId().isEmpty()) {
-            userManager.deleteUser(username);
-            return Response.status(200).entity(user).build();
+        if (user.getId().isEmpty()) {
+            return Response.status(404).build();
         }
-        return Response.status(404).build();
+        userManager.deleteUser(username);
+        return Response.status(200).entity(user).build();
     }
 
 
-    // GET ranking by coins --> A MEDIAS
+    // GET ranking by coins --> FET
+    @GET
+    @ApiOperation(value = "get users by number of coins", notes = " ")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
+    })
+    @Path("/coinRanking")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCoinRanking() {
+
+        List<String> coinRanking = this.userManager.getCoinRanking();
+        GenericEntity<List<String>> entity = new GenericEntity<List<String>>(coinRanking) {};
+        return Response.status(201).entity(entity).build();
+    }
 }

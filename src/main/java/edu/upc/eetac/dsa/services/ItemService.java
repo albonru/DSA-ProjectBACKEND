@@ -31,21 +31,6 @@ public class ItemService {
         this.itemManager = ItemDAOImpl.getInstance();
         this.userManager = UserDAOImpl.getInstance();
         this.inventoryManager = InventoryDAOImpl.getInstance();
-
-        Item weapon = new Item("Gun","Ranged weapon",100,"Weapon",7,0);
-        Item armor = new Item("Shield","Slightly increases defense",75,"Armor",0,10);
-        Item skin = new Item("Luigi","Alter your appearance to look like Luigi",400,"Skin",0,0);
-
-        this.itemManager.addItem(weapon);
-        this.itemManager.addItem(armor);
-        this.itemManager.addItem(skin);
-
-        this.itemManager.addToStore(weapon.getName());
-        this.itemManager.addToStore(armor.getName());
-        this.itemManager.addToStore(skin.getName());
-
-        User user = this.userManager.getUserByName("Irene");
-        this.inventoryManager.addItem(weapon,user.getId());
     }
 
     @Path("basic")
@@ -70,7 +55,7 @@ public class ItemService {
         return Response.status(200).entity(entity).build();
     }
 
-    //get ALL items from a user's inventory --> NO FUNCIONA
+    //get ALL items from a user's inventory --> A MEDIAS
     @GET
     @ApiOperation(value = "Get a particular User's inventory", notes = " ")
     @ApiResponses(value = {
