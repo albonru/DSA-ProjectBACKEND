@@ -3,7 +3,10 @@ package edu.upc.eetac.dsa.dao.impl;
 import edu.upc.eetac.dsa.dao.InventoryDAO;
 import edu.upc.eetac.dsa.models.Inventory;
 import edu.upc.eetac.dsa.models.Item;
+import edu.upc.eetac.dsa.models.User;
 
+import java.beans.IntrospectionException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -25,28 +28,80 @@ public class InventoryDAOImpl implements InventoryDAO {
         return manager;
     }
 
-    // A FER
+    // FET
     @Override
-    public Inventory addInventory(String userid) {
-
-        return null;
+    public List<Inventory> getAll() {
+        List<Inventory> inventories = this.session.getAll(Inventory.class);
+        return inventories;
     }
 
-    // A FER
+    // FET
     @Override
-    public void addItem(Item item, String userid) {
+    public boolean alreadyExists(String username, String itemname) {
+        List<Inventory> all = this.getAll();
+        User user = (User) this.session.getByName(User.class, username);
+        Item item = (Item) this.session.getByName(Item.class, itemname);
 
+        for (Inventory i : all) {
+            if ((i.getUserId().equals(user.getId())) && (i.getItemId().equals(item.getId()))) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    // A FER
+    // FET
     @Override
-    public Item retrieveItem(Item item, String userid) {
-        return null;
+    public Inventory addInventory(String username, String itemname) {
+        User user = (User) this.session.getByName(User.class, username);
+        Item item = (Item) this.session.getByName(Item.class, itemname);
+
+        Inventory i = new Inventory(user.getId(), item.getId());
+        this.session.save(i);
+        return i;
     }
 
-    // A FER
+    // FET
     @Override
     public List<Item> getUserInventory(String userid) {
-        return null;
+        List<Inventory> inventories = this.getAll();
+        List<Item> userItems = new LinkedList<>();
+
+        for (Inventory i : inventories) {
+            if (i.getUserId().equals(userid)) {
+                Item item = (Item) this.session.getById(Item.class, i.getItemId());
+                userItems.add(item);
+            }
+        }
+        return userItems;
+    }
+
+    // FET
+    @Override
+    public void makeActive(String userid, String itemid) {
+        List <Inventory> iList = this.getAll();
+        iList.forEach(i -> {
+            if(i.getItemId().equals(itemid) && i.getUserId().equals(userid)) {
+                i.setActive(true);
+                try {
+                    this.session.update(i);
+                } catch (IntrospectionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    // FET
+    @Override
+    public void buyItem(String username, String itemname) throws IntrospectionException {
+        User user = (User) this.session.getByName(User.class, username);
+        Item item = (Item) this.session.getByName(Item.class, itemname);
+
+        int coinBalance = user.getCoins() - item.getPrice();
+        user.setCoins(coinBalance);
+        this.session.update(user);
+
+        this.addInventory(username, itemname);
     }
 }

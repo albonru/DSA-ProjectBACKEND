@@ -23,11 +23,9 @@ import java.util.List;
 @Path("/user")
 public class UserService {
     private UserDAO userManager;
-    private InventoryDAO inventoryManager;
 
     public UserService() {
         this.userManager = UserDAOImpl.getInstance();
-        this.inventoryManager = InventoryDAOImpl.getInstance();
     }
 
     @Path("basic")

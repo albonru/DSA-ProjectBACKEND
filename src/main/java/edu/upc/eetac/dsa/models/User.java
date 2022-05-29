@@ -10,7 +10,6 @@ public class User {
     private String password;
     private String email;
     private Integer coins;
-    private String inventoryId;
 
     public User() {}
 
@@ -20,7 +19,6 @@ public class User {
         this.password = password;
         this.email = email;
         this.coins = 0;
-        this.inventoryId = RandomUtils.getId();
     }
 
     public String getId() {
@@ -63,20 +61,13 @@ public class User {
         this.coins = coins;
     }
 
-    public String getInventoryId() {
-        return inventoryId;
-    }
-
-    public void setInventoryId(String inventoryId) {
-        this.inventoryId = inventoryId;
-    }
-
     @Override
     public String toString() {
         return "User{" + "ID='" + this.id + '\'' +
                 ", username='" + this.name + '\'' +
                 ", password='" + this.password + '\'' +
                 ", email='" + this.email + '\'' +
+                ", coins='" + this.coins + '\'' +
                 '}';
     }
 }

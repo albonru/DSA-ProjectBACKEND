@@ -17,6 +17,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.beans.IntrospectionException;
 import java.util.List;
 
 @Api(value = "/item", description = "Endpoint to Item Service")
@@ -55,7 +56,7 @@ public class ItemService {
         return Response.status(200).entity(entity).build();
     }
 
-    //get ALL items from a user's inventory --> A MEDIAS
+    //get ALL items from a user's inventory --> FET
     @GET
     @ApiOperation(value = "Get a particular User's inventory", notes = " ")
     @ApiResponses(value = {
@@ -76,7 +77,7 @@ public class ItemService {
         }
     }
 
-    // buy item from store --> A MEDIAS
+    // buy item from store --> FET
     @PUT
     @ApiOperation(value = "Buy an Item", notes = " ")
     @ApiResponses(value = {
@@ -86,11 +87,24 @@ public class ItemService {
             @ApiResponse(code = 405, message = "Item not found"),
             @ApiResponse(code = 409, message = "Item is already in possession")
     })
-    @Path("/buyItem/{itemName}/{username}")
+    @Path("/buyItem/{itemname}/{username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buyItem(@PathParam("item") String item, @PathParam("username") String username) {
+    public Response buyItem(@PathParam("item") String itemname, @PathParam("username") String username) throws IntrospectionException {
 
+        User user = userManager.getUserByName(username);
+        Item item = itemManager.getByName(itemname);
 
-        return null;
+        if (user == null) {
+            return Response.status(404).build();
+        } else if (item == null) {
+            return Response.status(405).build();
+        } else if (user.getCoins() < item.getPrice()) {
+            return Response.status(402).build();
+        } else if (inventoryManager.alreadyExists(username, itemname)){
+            return Response.status(409).build();
+        } else {
+            this.inventoryManager.buyItem(username,itemname);
+            return Response.status(200).build();
+        }
     }
 }

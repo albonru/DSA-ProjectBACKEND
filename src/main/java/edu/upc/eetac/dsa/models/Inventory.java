@@ -2,18 +2,17 @@ package edu.upc.eetac.dsa.models;
 
 import edu.upc.eetac.dsa.util.RandomUtils;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class Inventory {
     private String id;
     private String userId;
-    private List<Item> itemList = null;
+    private String itemId;
+    private boolean active;
 
-    public Inventory(String userId) {
+    public Inventory(String userId, String itemId) {
         this.id = RandomUtils.getId();
         this.userId = userId;
-        this.itemList = new LinkedList<>();
+        this.itemId = itemId;
+        this.active = false;
     }
 
     public Inventory() {}
@@ -34,11 +33,19 @@ public class Inventory {
         this.userId = userId;
     }
 
-    public List<Item> getItemList() {
-        return itemList;
+    public String getItemId() {
+        return itemId;
     }
 
-    public void setItemList(List<Item> itemList) {
-        this.itemList = itemList;
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

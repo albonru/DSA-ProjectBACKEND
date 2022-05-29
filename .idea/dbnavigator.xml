@@ -39,7 +39,6 @@ CREATE TABLE User (
     password VARCHAR(30) NOT NULL,
     email VARCHAR(50) NOT NULL,
     coins INT NOT NULL,
-    -- inventoryId VARCHAR(30) NOT NULL
     PRIMARY KEY (id)
 ) ENGINE = InnoDB;
 
@@ -57,12 +56,15 @@ CREATE TABLE Item (
 CREATE TABLE Inventory (
     id VARCHAR(30) NOT NULL,
     userId VARCHAR(30) NOT NULL,
-    -- itemID // itemList
-    FOREIGN KEY (userId) references User(id),
-    -- FOREIGN KEY () REFERENCES Item(id)
+    itemId VARCHAR(30) NOT NULL,
+    active BOOLEAN,
+    FOREIGN KEY (userId) REFERENCES User(id),
+    FOREIGN KEY (itemId) REFERENCES Item(id)
 ) ENGINE = InnoDB;
 
-INSERT INTO User VALUES ('fq3rv42rv', 'Alba', '1234', 'alba@upc.com', 500);]]></console>
+INSERT INTO User VALUES ('fq3rv42rv', 'Alba', '1234', 'alba@upc.com', 500);
+INSERT INTO Item VALUES ('fq34b563o', 'Gun', 'Ranged', 50, 'Weapon', 10, 0);
+INSERT INTO Inventory VALUES ('1r3buoi2', 'fq3rv42rv', 'fq34b563o', true);]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

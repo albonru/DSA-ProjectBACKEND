@@ -34,20 +34,17 @@ public class ItemDAOImpl implements ItemDAO {
         return storeList;
     }
 
-    // A MITGES
-    @Override
-    public void buyItem(String item, String username) {
-
-        User u = (User) this.session.getByName(User.class, username);
-        Item i = (Item) this.session.getByName(Item.class, item);
-
-        //u.addToInventory(i);
-    }
-
     // FET
     public Item addItem(Item item) {
         this.session.save(item);
         logger.info("Item saved: " + item.toString());
+        return item;
+    }
+
+    // FET
+    @Override
+    public Item getByName(String itemname) {
+        Item item = (Item) this.session.getByName(Item.class, itemname);
         return item;
     }
 }
