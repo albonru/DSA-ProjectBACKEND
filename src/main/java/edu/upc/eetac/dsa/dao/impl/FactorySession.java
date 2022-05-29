@@ -8,12 +8,13 @@ import java.util.Properties;
 public class FactorySession {
 
     static Connection getConnection() {
+
         Connection conn = null;
         Properties properties = new Properties();
         properties.setProperty("user","root");
-        properties.setProperty("password","Mario72");
+        properties.setProperty("password","admin");
         try {
-            conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/mariodb",properties);
+            conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/mariadb", properties);
             System.out.println("Connected to the DB");
         } catch (SQLException ex) {
             // handle any errors
