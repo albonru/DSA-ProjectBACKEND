@@ -29,7 +29,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="3a7bd39c-eb24-468a-9309-b92a3062ef71">
-      <console name="Connection" type="STANDARD" schema="dsa" session="Main"><![CDATA[DROP DATABASE IF EXISTS mariodb;
+      <console name="Connection" type="STANDARD" schema="mariodb" session="Main"><![CDATA[DROP DATABASE IF EXISTS mariodb;
 CREATE DATABASE mariodb;
 USE mariodb;
 
@@ -118,10 +118,10 @@ INSERT INTO Inventory VALUES ('1r3buoi2', 'fq3rv42rv', 'fq34b563o', true);]]></c
           <url-type value="DATABASE" />
           <host value="localhost" />
           <port value="3306" />
-          <database value="dsa" />
+          <database value="mariodb" />
           <type value="USER_PASSWORD" />
           <user value="root" />
-          <deprecated-pwd value="Q2VubWFuQDMwNw==" />
+          <deprecated-pwd value="TWFyaW83Mg==" />
         </database>
         <properties>
           <auto-commit value="false" />
