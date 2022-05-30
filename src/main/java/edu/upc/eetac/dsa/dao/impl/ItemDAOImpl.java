@@ -27,7 +27,7 @@ public class ItemDAOImpl implements ItemDAO {
         return manager;
     }
 
-    // FET
+    // OK
     @Override
     public List<Item> getStoreList() {
         List<Item> storeList = this.session.getAll(Item.class);

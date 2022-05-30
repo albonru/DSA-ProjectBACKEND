@@ -1,8 +1,6 @@
 package edu.upc.eetac.dsa.services;
 
-import edu.upc.eetac.dsa.dao.InventoryDAO;
 import edu.upc.eetac.dsa.dao.UserDAO;
-import edu.upc.eetac.dsa.dao.impl.InventoryDAOImpl;
 import edu.upc.eetac.dsa.dao.impl.UserDAOImpl;
 import edu.upc.eetac.dsa.models.LogInCredentials;
 import edu.upc.eetac.dsa.models.User;
@@ -35,12 +33,13 @@ public class UserService {
         return "Got it!";
     }
 
-    // sign up NEW user --> FUNCIONA
+    // sign up NEW user --> OK
     @POST
     @ApiOperation(value = "User sign up", notes = "username + password + email")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response= User.class),
-            @ApiResponse(code = 405, message = "Username or email already in use"),
+            @ApiResponse(code = 405, message = "Username already in use"),
+            @ApiResponse(code = 406, message = "email already in use"),
             @ApiResponse(code = 500, message = "Validation Error")
 
     })
@@ -54,14 +53,17 @@ public class UserService {
 
         User namecheck = this.userManager.getUserByName(userCred.getUsername());
         User emailcheck = this.userManager.getUserByEmail(userCred.getEmail());
-        if (namecheck != null || emailcheck != null)
+        if (namecheck != null )
             return Response.status(405).entity(user).build();
-
-        this.userManager.addUser(user.getName(), user.getPassword(), user.getEmail());
-        return Response.status(200).entity(user).build();
+        else if (emailcheck != null )
+            return Response.status(406).entity(user).build();
+        else {
+            this.userManager.addUser(user.getName(), user.getPassword(), user.getEmail());
+            return Response.status(200).entity(user).build();
+        }
     }
 
-    // get ONE particular user --> FUNCIONA
+    // get ONE particular user --> OK
     @GET
     @ApiOperation(value = "Get a particular User", notes = "username")
     @ApiResponses(value = {
@@ -81,7 +83,7 @@ public class UserService {
         }
     }
 
-    // get ALL signed up users --> FUNCIONA
+    // get ALL signed up users --> OK
     @GET
     @ApiOperation(value = "Get all signed up Users", notes = " ")
     @ApiResponses(value = {
@@ -96,7 +98,7 @@ public class UserService {
         return Response.status(201).entity(entity).build();
     }
 
-    // LOGIN user --> FUNCIONA
+    // LOGIN user --> OK
     @POST
     @ApiOperation(value = "LogIn User", notes = "Name and Password")
     @ApiResponses(value = {
@@ -122,7 +124,7 @@ public class UserService {
         }
     }
 
-    // actualize/modify/UPDATE user --> FET
+    // actualize/modify/UPDATE user --> NOT OK
     @PUT
     @ApiOperation(value = "Update User information", notes = "userName, password and email")
     @ApiResponses(value = {
@@ -145,7 +147,7 @@ public class UserService {
         }
     }
 
-    // DELETE user --> FET
+    // DELETE user --> NOT OK
     @DELETE
     @ApiOperation(value = "Delete a User", notes = "Name")
     @ApiResponses(value = {
@@ -164,7 +166,7 @@ public class UserService {
     }
 
 
-    // GET ranking by coins --> FET
+    // GET ranking by coins --> NOT OK COINS = NULL
     @GET
     @ApiOperation(value = "get users by number of coins", notes = " ")
     @ApiResponses(value = {

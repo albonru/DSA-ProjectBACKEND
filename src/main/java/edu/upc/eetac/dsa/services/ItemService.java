@@ -41,7 +41,7 @@ public class ItemService {
         return "Got it!";
     }
 
-    // get ALL items from the store --> FUNCIONA
+    // get ALL items from the store --> OK
     @GET
     @ApiOperation(value = "Get all items in store", notes = " ")
     @ApiResponses(value = {
@@ -56,7 +56,7 @@ public class ItemService {
         return Response.status(200).entity(entity).build();
     }
 
-    //get ALL items from a user's inventory --> FET
+    //get ALL items from a user's inventory --> NOT OK
     @GET
     @ApiOperation(value = "Get a particular User's inventory", notes = " ")
     @ApiResponses(value = {
@@ -77,7 +77,7 @@ public class ItemService {
         }
     }
 
-    // buy item from store --> FET
+    // buy item from store --> NOT OK
     @PUT
     @ApiOperation(value = "Buy an Item", notes = " ")
     @ApiResponses(value = {

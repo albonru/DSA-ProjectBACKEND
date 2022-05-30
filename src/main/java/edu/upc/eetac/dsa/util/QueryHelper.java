@@ -65,6 +65,7 @@ public class QueryHelper {
         return sb.toString();
     }
 
+    // OK
     public static String createQuerySELECTAll(Class theClass) {
         StringBuffer sb = new StringBuffer("");
         sb.append("SELECT * FROM ").append(theClass.getSimpleName());

@@ -1,12 +1,18 @@
 package edu.upc.eetac.dsa.util;
 
+import edu.upc.eetac.dsa.dao.impl.SessionImpl;
+
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Logger;
 
 public class ObjectHelper {
 
+    static final Logger logger = Logger.getLogger(ObjectHelper.class.getName());
+
+    // OK
     public static String[] getFields(Object entity) {
         Class theClass = entity.getClass();
         Field[] fields = theClass.getDeclaredFields();
@@ -19,6 +25,7 @@ public class ObjectHelper {
         return sFields;
     }
 
+    // OK
     public static Object getter(Object entity, String fieldName) throws IntrospectionException {
         PropertyDescriptor pd;
         try {
@@ -37,6 +44,7 @@ public class ObjectHelper {
         return null;
     }
 
+    // OK
     public static void setter(Object entity, String fieldName, Object value) {
         PropertyDescriptor pd;
         try {

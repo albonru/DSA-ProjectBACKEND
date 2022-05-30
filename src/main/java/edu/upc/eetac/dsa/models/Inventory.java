@@ -6,13 +6,13 @@ public class Inventory {
     private String id;
     private String userId;
     private String itemId;
-    private boolean active;
+    //private boolean active;
 
     public Inventory(String userId, String itemId) {
         this.id = RandomUtils.getId();
         this.userId = userId;
         this.itemId = itemId;
-        this.active = false;
+        //this.active = false;
     }
 
     public Inventory() {}
@@ -41,11 +41,11 @@ public class Inventory {
         this.itemId = itemId;
     }
 
-    public boolean isActive() {
+    /*public boolean isActive() {
         return active;
     }
 
     public void setActive(boolean active) {
         this.active = active;
-    }
+    }*/
 }

@@ -82,7 +82,7 @@ public class InventoryDAOImpl implements InventoryDAO {
         List <Inventory> iList = this.getAll();
         iList.forEach(i -> {
             if(i.getItemId().equals(itemid) && i.getUserId().equals(userid)) {
-                i.setActive(true);
+                //i.setActive(true);
                 try {
                     this.session.update(i);
                 } catch (IntrospectionException e) {

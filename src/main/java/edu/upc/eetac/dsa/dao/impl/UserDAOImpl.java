@@ -26,16 +26,16 @@ public class UserDAOImpl implements UserDAO {
         return manager;
     }
 
-    // FET
+    // OK
     @Override
     public User addUser(String name, String password, String email) {
         User user = new User(name, password, email);
+        logger.info("new user: " + user.toString());
         session.save(user);
-        logger.info("Added new user: " + user.toString());
         return user;
     }
 
-    // FET
+    // NOT OK
     @Override
     public User updateUser(String oldUsername, String name, String password, String email) throws IntrospectionException {
         User user = (User) this.session.getByName(User.class, oldUsername);
@@ -47,21 +47,26 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    // FET
+    // OK
     @Override
     public User getUserById(String id) {
         User user = (User) this.session.getById(User.class, id);
+        if (user.getName() == null) return null;
+        logger.info("user by id: " + user.toString());
         return user;
     }
 
-    // FET
+    // OK
     @Override
     public User getUserByName(String name) {
         User user = (User) this.session.getByName(User.class, name);
+        if (user.getName() == null) return null;
+        logger.info("user by name: " + user.toString());
+
         return user;
     }
 
-    // FET
+    // OK
     @Override
     public User getUserByEmail(String email) {
         List<User> userList = this.getAllUsers();
@@ -72,7 +77,7 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
-    // FET
+    // OK
     @Override
     public List<User> getAllUsers() {
         List<User> userList = new LinkedList<>();
@@ -80,7 +85,7 @@ public class UserDAOImpl implements UserDAO {
         return userList;
     }
 
-    // FET
+    // NOT OK
     @Override
     public List<String> getCoinRanking() {
         List<User> userList = this.session.getAll(User.class);
@@ -101,7 +106,7 @@ public class UserDAOImpl implements UserDAO {
         return usernames;
     }
 
-    // FET
+    // NOT OK
     @Override
     public void deleteUser(String name) throws IntrospectionException {
         User u = (User) this.session.getByName(User.class, name);

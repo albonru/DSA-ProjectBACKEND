@@ -26,11 +26,11 @@ CREATE TABLE Inventory (
     id VARCHAR(30) NOT NULL,
     userId VARCHAR(30) NOT NULL,
     itemId VARCHAR(30) NOT NULL,
-    active BOOLEAN,
+    --active BOOLEAN,
     FOREIGN KEY (userId) REFERENCES User(id),
     FOREIGN KEY (itemId) REFERENCES Item(id)
 ) ENGINE = InnoDB;
 
 INSERT INTO User VALUES ('fq3rv42rv', 'Alba', '1234', 'alba@upc.com', 500);
 INSERT INTO Item VALUES ('fq34b563o', 'Gun', 'Ranged', 50, 'Weapon', 10, 0);
-INSERT INTO Inventory VALUES ('1r3buoi2', 'fq3rv42rv', 'fq34b563o', true);
+INSERT INTO Inventory VALUES ('1r3buoi2', 'fq3rv42rv', 'fq34b563o');

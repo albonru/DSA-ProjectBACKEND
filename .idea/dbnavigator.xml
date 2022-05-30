@@ -57,7 +57,7 @@ CREATE TABLE Inventory (
     id VARCHAR(30) NOT NULL,
     userId VARCHAR(30) NOT NULL,
     itemId VARCHAR(30) NOT NULL,
-    active BOOLEAN,
+    -- active BOOLEAN,
     FOREIGN KEY (userId) REFERENCES User(id),
     FOREIGN KEY (itemId) REFERENCES Item(id)
 ) ENGINE = InnoDB;
@@ -74,7 +74,10 @@ INSERT INTO Inventory VALUES ('1r3buoi2', 'fq3rv42rv', 'fq34b563o', true);]]></c
     <connection id="3a7bd39c-eb24-468a-9309-b92a3062ef71" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="3a7bd39c-eb24-468a-9309-b92a3062ef71" dataset="mariodb.item" active-filter-id="" />
+    <filter-actions connection-id="3a7bd39c-eb24-468a-9309-b92a3062ef71" dataset="mariodb.inventory" active-filter-id="" />
     <filter-actions connection-id="3a7bd39c-eb24-468a-9309-b92a3062ef71" dataset="dsa.users" active-filter-id="" />
+    <filter-actions connection-id="3a7bd39c-eb24-468a-9309-b92a3062ef71" dataset="mariodb.user" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
