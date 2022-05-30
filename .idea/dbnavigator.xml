@@ -29,7 +29,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="3a7bd39c-eb24-468a-9309-b92a3062ef71">
-      <console name="Connection" type="STANDARD" schema="mariodb" session="Main"><![CDATA[DROP DATABASE IF EXISTS mariodb;
+      <console name="Connection" type="STANDARD" schema="mariodb" session="Main">DROP DATABASE IF EXISTS mariodb;
 CREATE DATABASE mariodb;
 USE mariodb;
 
@@ -64,7 +64,7 @@ CREATE TABLE Inventory (
 
 INSERT INTO User VALUES ('fq3rv42rv', 'Alba', '1234', 'alba@upc.com', 500);
 INSERT INTO Item VALUES ('fq34b563o', 'Gun', 'Ranged', 50, 'Weapon', 10, 0);
-INSERT INTO Inventory VALUES ('1r3buoi2', 'fq3rv42rv', 'fq34b563o', true);]]></console>
+INSERT INTO Inventory VALUES ('1r3buoi2', 'fq3rv42rv', 'fq34b563o', true);</console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

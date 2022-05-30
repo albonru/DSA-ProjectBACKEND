@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cdda852a-ece6-4e70-b5c3-3bbddd41dc07" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/upc/eetac/dsa/dao/impl/InventoryDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/upc/eetac/dsa/dao/impl/InventoryDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/upc/eetac/dsa/dao/impl/ItemDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/upc/eetac/dsa/dao/impl/ItemDAOImpl.java" afterDir="false" />
@@ -16,6 +17,11 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/upc/eetac/dsa/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/upc/eetac/dsa/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/upc/eetac/dsa/util/ObjectHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/upc/eetac/dsa/util/ObjectHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/upc/eetac/dsa/util/QueryHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/upc/eetac/dsa/util/QueryHelper.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/upc/eetac/dsa/dao/impl/FactorySession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/upc/eetac/dsa/dao/impl/FactorySession.java" afterDir="false" />
+>>>>>>> 4ab98982c24169c585b49340cec2a221fa5c5db8
       <change beforePath="$PROJECT_DIR$/src/main/resources/marioDB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/marioDB.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,11 +50,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="DBNavigator.Project.ConnectionSettings" />
+    <property name="settings.editor.selected.configurable" value="com.intellij.jarRepository.settings.RemoteRepositoriesConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
