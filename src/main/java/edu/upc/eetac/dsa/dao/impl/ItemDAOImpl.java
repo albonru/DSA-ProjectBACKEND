@@ -43,8 +43,10 @@ public class ItemDAOImpl implements ItemDAO {
 
     // FET
     @Override
-    public Item getByName(String itemname) {
+    public Item getItemByName(String itemname) {
         Item item = (Item) this.session.getByName(Item.class, itemname);
+        if (item.getName() == null) return null;
+        logger.info("item by name: " + item.toString());
         return item;
     }
 }

@@ -1,6 +1,8 @@
 package edu.upc.eetac.dsa.dao.impl;
 
 import edu.upc.eetac.dsa.dao.InventoryDAO;
+import edu.upc.eetac.dsa.dao.ItemDAO;
+import edu.upc.eetac.dsa.dao.UserDAO;
 import edu.upc.eetac.dsa.models.Inventory;
 import edu.upc.eetac.dsa.models.Item;
 import edu.upc.eetac.dsa.models.User;
@@ -13,6 +15,8 @@ import java.util.logging.Logger;
 public class InventoryDAOImpl implements InventoryDAO {
     static final Logger logger = Logger.getLogger(UserDAOImpl.class.getName());
     private static InventoryDAOImpl manager;
+    private static UserDAO userManager = UserDAOImpl.getInstance();
+    private static ItemDAO itemManager = ItemDAOImpl.getInstance();
     private SessionImpl session;
 
     InventoryDAOImpl() {
@@ -39,8 +43,8 @@ public class InventoryDAOImpl implements InventoryDAO {
     @Override
     public boolean alreadyExists(String username, String itemname) {
         List<Inventory> all = this.getAll();
-        User user = (User) this.session.getByName(User.class, username);
-        Item item = (Item) this.session.getByName(Item.class, itemname);
+        User user = userManager.getUserByName(username);
+        Item item = itemManager.getItemByName(itemname);
 
         for (Inventory i : all) {
             if ((i.getUserId().equals(user.getId())) && (i.getItemId().equals(item.getId()))) {
@@ -50,7 +54,7 @@ public class InventoryDAOImpl implements InventoryDAO {
         return false;
     }
 
-    // FET
+    // NOT OK
     @Override
     public Inventory addInventory(String username, String itemname) {
         User user = (User) this.session.getByName(User.class, username);
@@ -61,7 +65,7 @@ public class InventoryDAOImpl implements InventoryDAO {
         return i;
     }
 
-    // FET
+    // OK
     @Override
     public List<Item> getUserInventory(String userid) {
         List<Inventory> inventories = this.getAll();
@@ -92,7 +96,7 @@ public class InventoryDAOImpl implements InventoryDAO {
         });
     }
 
-    // FET
+    // NOT OK
     @Override
     public void buyItem(String username, String itemname) throws IntrospectionException {
         User user = (User) this.session.getByName(User.class, username);

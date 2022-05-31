@@ -56,7 +56,7 @@ public class ItemService {
         return Response.status(200).entity(entity).build();
     }
 
-    //get ALL items from a user's inventory --> NOT OK
+    //get ALL items from a user's inventory --> OK
     @GET
     @ApiOperation(value = "Get a particular User's inventory", notes = " ")
     @ApiResponses(value = {
@@ -89,10 +89,10 @@ public class ItemService {
     })
     @Path("/buyItem/{itemname}/{username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buyItem(@PathParam("item") String itemname, @PathParam("username") String username) throws IntrospectionException {
+    public Response buyItem(@PathParam("itemname") String itemname, @PathParam("username") String username) throws IntrospectionException {
 
         User user = userManager.getUserByName(username);
-        Item item = itemManager.getByName(itemname);
+        Item item = itemManager.getItemByName(itemname);
 
         if (user == null) {
             return Response.status(404).build();

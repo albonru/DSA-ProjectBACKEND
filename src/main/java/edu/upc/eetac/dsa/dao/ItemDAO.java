@@ -7,5 +7,5 @@ import java.util.List;
 public interface ItemDAO {
     public List<Item> getStoreList();
     public Item addItem(Item item);
-    public Item getByName(String itemname);
+    public Item getItemByName(String itemname);
 }
