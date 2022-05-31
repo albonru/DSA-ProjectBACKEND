@@ -4,6 +4,7 @@ import java.beans.IntrospectionException;
 
 public class QueryHelper {
 
+    // OK
     public static String createQueryINSERT(Object entity) {
         StringBuffer sb = new StringBuffer("INSERT INTO ").
                 append(entity.getClass().getSimpleName()).
@@ -26,6 +27,7 @@ public class QueryHelper {
         return sb.toString();
     }
 
+    // OK
     public static String createQueryUPDATE(Object entity) throws IntrospectionException {
         StringBuffer sb = new StringBuffer("");
         sb.append("UPDATE ").append(entity.getClass().getSimpleName()).
@@ -37,20 +39,11 @@ public class QueryHelper {
             sb.append(f).append(" = ?,");
         }
         sb.deleteCharAt(sb.length() - 1);
-        sb.append(" WHERE id = ").append(id);
-        return sb.toString();
-    }
-
-    public static String createQuerySELECT(Object entity) throws IntrospectionException {
-        StringBuffer sb = new StringBuffer("");
-        Class theClass = entity.getClass();
-        String id = ("" + ObjectHelper.getter(entity, "id"));
-        sb.append("SELECT * FROM ").append(theClass.getSimpleName());
         sb.append(" WHERE id = '").append(id).append("'");
-
         return sb.toString();
     }
 
+    // OK
     public static String createQuerySELECTById(Class theClass, String id) {
         StringBuffer sb = new StringBuffer("");
         sb.append("SELECT * FROM ").append(theClass.getSimpleName());
@@ -58,6 +51,7 @@ public class QueryHelper {
         return sb.toString();
     }
 
+    // OK
     public static String createQuerySELECTByName(Class theClass, String name) {
         StringBuffer sb = new StringBuffer("");
         sb.append("SELECT * FROM ").append(theClass.getSimpleName());
@@ -72,11 +66,12 @@ public class QueryHelper {
         return sb.toString();
     }
 
+    // OK
     public static String createQueryDELETE(Object entity) throws IntrospectionException {
         StringBuffer sb = new StringBuffer("");
-        String id = ("" + ObjectHelper.getter(entity, "id"));
+        String id = (ObjectHelper.getter(entity, "id").toString());
         sb.append("DELETE FROM ").append(entity.getClass().getSimpleName()).
-                append(" WHERE id = ").append(id);
+                append(" WHERE id='").append(id).append("'");
         return sb.toString();
     }
 }

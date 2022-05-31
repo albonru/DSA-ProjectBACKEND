@@ -124,7 +124,7 @@ public class UserService {
         }
     }
 
-    // actualize/modify/UPDATE user --> NOT OK
+    // UPDATE user --> OK
     @PUT
     @ApiOperation(value = "Update User information", notes = "userName, password and email")
     @ApiResponses(value = {
@@ -147,7 +147,7 @@ public class UserService {
         }
     }
 
-    // DELETE user --> NOT OK
+    // DELETE user --> OK
     @DELETE
     @ApiOperation(value = "Delete a User", notes = "Name")
     @ApiResponses(value = {
@@ -158,17 +158,19 @@ public class UserService {
     public Response deleteUser(@PathParam("username") String username) throws IntrospectionException {
 
         User user = userManager.getUserByName(username);
-        if (user.getId().isEmpty()) {
+        if (user == null) {
             return Response.status(404).build();
         }
-        userManager.deleteUser(username);
-        return Response.status(200).entity(user).build();
+        else {
+            userManager.deleteUser(username);
+            return Response.status(200).entity(user).build();
+        }
     }
 
 
-    // GET ranking by coins --> NOT OK COINS = NULL
+    // GET ranking by coins --> OK
     @GET
-    @ApiOperation(value = "get users by number of coins", notes = " ")
+    @ApiOperation(value = "get users by number of coins", notes = "descendent")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
     })
@@ -176,8 +178,8 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCoinRanking() {
 
-        List<String> coinRanking = this.userManager.getCoinRanking();
-        GenericEntity<List<String>> entity = new GenericEntity<List<String>>(coinRanking) {};
+        List<User> coinRanking = this.userManager.getCoinRanking();
+        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(coinRanking) {};
         return Response.status(201).entity(entity).build();
     }
 }

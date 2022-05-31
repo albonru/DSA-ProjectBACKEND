@@ -156,7 +156,7 @@ public class SessionImpl<E> implements Session<E> {
         return null;
     }
 
-    // NOT OK
+    // OK
     @Override
     public void update(E entity) throws IntrospectionException {
         String query = QueryHelper.createQueryUPDATE(entity);
@@ -177,7 +177,7 @@ public class SessionImpl<E> implements Session<E> {
         }
     }
 
-    // NOT OK
+    // OK
     @Override
     public void delete(E entity) throws IntrospectionException {
         String query = QueryHelper.createQueryDELETE(entity);

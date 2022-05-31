@@ -12,6 +12,6 @@ public interface UserDAO {
     public User getUserByName(String name);
     public User getUserByEmail(String email);
     public List<User> getAllUsers();
-    public List<String> getCoinRanking();
+    public List<User> getCoinRanking();
     public void deleteUser(String name) throws IntrospectionException;
 }

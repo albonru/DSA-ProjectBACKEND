@@ -35,7 +35,7 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    // NOT OK
+    // OK
     @Override
     public User updateUser(String oldUsername, String name, String password, String email) throws IntrospectionException {
         User user = (User) this.session.getByName(User.class, oldUsername);
@@ -85,11 +85,10 @@ public class UserDAOImpl implements UserDAO {
         return userList;
     }
 
-    // NOT OK
+    // OK
     @Override
-    public List<String> getCoinRanking() {
+    public List<User> getCoinRanking() {
         List<User> userList = this.session.getAll(User.class);
-        List<String> usernames = new ArrayList<>();
 
         Collections.sort(userList, new Comparator<User>() {
             @Override
@@ -101,18 +100,15 @@ public class UserDAOImpl implements UserDAO {
                 return 0;
             }
         });
-
-        userList.forEach(u -> usernames.add(u.getName()));
-        return usernames;
+        Collections.reverse(userList);
+        return userList;
     }
 
-    // NOT OK
+    // OK
     @Override
     public void deleteUser(String name) throws IntrospectionException {
         User u = (User) this.session.getByName(User.class, name);
+        logger.info("user to delete: " + u.toString());
         session.delete(u);
-        logger.info("Deleted user: " + u.toString());
     }
-
-
 }
