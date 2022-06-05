@@ -29,12 +29,14 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="3a7bd39c-eb24-468a-9309-b92a3062ef71">
-      <console name="Connection" type="STANDARD" schema="dsa" session="Main"><![CDATA[CREATE TABLE usuarios()
-Id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-Name VARCHAR(50) NOT NULL,
-password VARCHAR(50) NOT NULL,
-Email VARCHAR(50) NOT NULL ,
-Coins int NOT NULL 
+      <console name="Connection" type="STANDARD" schema="dsa" session="Main"><![CDATA[create table Item(
+id varchar(50) primary key not null,
+name varchar(50) not null,
+desciption varchar(500) not null,
+price int not null,
+type varchar(30) not null,
+damage int not null,
+dmgReduction int not null
 );]]></console>
     </connection>
   </component>

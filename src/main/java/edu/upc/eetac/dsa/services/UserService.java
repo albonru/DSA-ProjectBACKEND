@@ -172,6 +172,5 @@ public class UserService {
         return Response.status(404).build();
     }
 
-
     // GET ranking by coins --> A MEDIAS
 }
