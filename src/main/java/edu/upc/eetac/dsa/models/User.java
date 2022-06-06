@@ -2,14 +2,14 @@ package edu.upc.eetac.dsa.models;
 
 import edu.upc.eetac.dsa.util.RandomUtils;
 
-import java.util.LinkedList;
-
 public class User {
     private String id;
     private String name;
     private String password;
     private String email;
     private Integer coins;
+    private String language;
+    private int points;
 
     public User() {}
 
@@ -19,6 +19,8 @@ public class User {
         this.password = password;
         this.email = email;
         this.coins = 0;
+        this.language = "en";
+        this.points = 0;
     }
 
     public String getId() {
@@ -61,13 +63,32 @@ public class User {
         this.coins = coins;
     }
 
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "ID='" + this.id + '\'' +
-                ", username='" + this.name + '\'' +
-                ", password='" + this.password + '\'' +
-                ", email='" + this.email + '\'' +
-                ", coins='" + this.coins + '\'' +
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", coins=" + coins +
+                ", languaje='" + language + '\'' +
+                ", points='" + points + '\'' +
                 '}';
     }
 }

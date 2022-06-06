@@ -13,5 +13,7 @@ public interface UserDAO {
     public User getUserByEmail(String email);
     public List<User> getAllUsers();
     public List<User> getCoinRanking();
+    public List<User> getPointRanking();
     public void deleteUser(String name) throws IntrospectionException;
+    public User changeLanguage(String username, String language) throws IntrospectionException;
 }

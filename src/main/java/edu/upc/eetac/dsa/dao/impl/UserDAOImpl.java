@@ -104,11 +104,38 @@ public class UserDAOImpl implements UserDAO {
         return userList;
     }
 
+    @Override
+    public List<User> getPointRanking() {
+        List<User> userList = this.session.getAll(User.class);
+
+        Collections.sort(userList, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                if (o1.getPoints() >= o2.getPoints())
+                    return 1;
+                if (o1.getPoints() < o2.getPoints())
+                    return -1;
+                return 0;
+            }
+        });
+        Collections.reverse(userList);
+        return userList;
+    }
+
     // OK
     @Override
     public void deleteUser(String name) throws IntrospectionException {
         User u = (User) this.session.getByName(User.class, name);
         logger.info("user to delete: " + u.toString());
         session.delete(u);
+    }
+
+    @Override
+    public User changeLanguage(String username, String language) throws IntrospectionException {
+        User user = getUserByName(username);
+        user.setLanguage(language);
+        logger.info("User language to update: " + user.toString());
+        this.session.update(user);
+        return user;
     }
 }

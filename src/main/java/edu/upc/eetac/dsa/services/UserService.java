@@ -126,7 +126,7 @@ public class UserService {
 
     // UPDATE user --> OK
     @PUT
-    @ApiOperation(value = "Update User information", notes = "userName, password and email")
+    @ApiOperation(value = "Update User credentials", notes = "userName, password and email")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = User.class),
             @ApiResponse(code = 404, message = "User not found"),
@@ -167,7 +167,6 @@ public class UserService {
         }
     }
 
-
     // GET ranking by coins --> OK
     @GET
     @ApiOperation(value = "get users by number of coins", notes = "descendent")
@@ -181,5 +180,44 @@ public class UserService {
         List<User> coinRanking = this.userManager.getCoinRanking();
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(coinRanking) {};
         return Response.status(201).entity(entity).build();
+    }
+
+    // GET ranking by points -> ADRIAN OK
+    @GET
+    @ApiOperation(value = "get users by number of points", notes = " ")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
+    })
+    @Path("/pointRanking")
+    @Produces(MediaType.APPLICATION_JSON)
+
+    public Response getPointRanking() {
+
+        List<User> pointRanking = this.userManager.getPointRanking();
+        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(pointRanking) {};
+        return Response.status(201).entity(entity).build();
+    }
+
+    // set language for a user -> FERRAN OK
+    @PUT
+    @ApiOperation(value = "Update User languaje", notes = "name, language")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = User.class),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Validation Error")
+    })
+    @Path("/language/{username}/{language}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response changeLanguage(@PathParam("username") String username, @PathParam("language") String language) throws IntrospectionException {
+
+        User user = userManager.getUserByName(username);
+        if ((username.isEmpty()) || (language.isEmpty()))
+            return Response.status(500).build();
+        else if (user == null) {
+            return Response.status(404).build();
+        } else {
+            this.userManager.changeLanguage(username, language);
+            return Response.status(200).entity(user).build();
+        }
     }
 }
