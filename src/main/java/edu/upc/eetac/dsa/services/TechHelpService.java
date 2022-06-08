@@ -49,7 +49,7 @@ public class TechHelpService {
 
         Question question = new Question(q.getDate(), q.getTitle(), q.getMessage(), q.getSender());
         if (question.getDate().isEmpty() || question.getTitle().isEmpty() || question.getMessage().isEmpty() || question.getSender().isEmpty())
-            return Response.status(500).entity(question).build();
+            return Response.status(500).build();
 
         else {
             this.manager.addQuestion(question);

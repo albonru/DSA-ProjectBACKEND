@@ -49,14 +49,14 @@ public class UserService {
 
         User user = new User(userCred.getUsername(), userCred.getPassword(), userCred.getEmail());
         if (user.getName().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty())
-            return Response.status(500).entity(user).build();
+            return Response.status(500).build();
 
         User namecheck = this.userManager.getUserByName(userCred.getUsername());
         User emailcheck = this.userManager.getUserByEmail(userCred.getEmail());
         if (namecheck != null )
-            return Response.status(405).entity(user).build();
+            return Response.status(405).build();
         else if (emailcheck != null )
-            return Response.status(406).entity(user).build();
+            return Response.status(406).build();
         else {
             this.userManager.addUser(user.getName(), user.getPassword(), user.getEmail());
             return Response.status(200).entity(user).build();
@@ -130,6 +130,8 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = User.class),
             @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 405, message = "Username already in use"),
+            @ApiResponse(code = 406, message = "email already in use"),
             @ApiResponse(code = 500, message = "Validation Error")
     })
     @Path("/update/{oldUsername}")
@@ -141,7 +143,16 @@ public class UserService {
             return Response.status(500).build();
         else if (oldUser == null) {
             return Response.status(404).build();
-        } else {
+        }
+
+        User namecheck = this.userManager.getUserByName(userCred.getUsername());
+        User emailcheck = this.userManager.getUserByEmail(userCred.getEmail());
+        if ((namecheck != null) && (!namecheck.getName().equals(oldUsername)) )
+            return Response.status(405).build();
+        else if ((emailcheck != null) && (!emailcheck.getEmail().equals(oldUser.getEmail())))
+            return Response.status(406).build();
+
+        else {
             userManager.updateUser(oldUsername, userCred.getUsername(), userCred.getPassword(), userCred.getEmail());
             return Response.status(200).entity(oldUser).build();
         }

@@ -7,7 +7,7 @@ CREATE TABLE User (
     name VARCHAR(30) NOT NULL,
     password VARCHAR(30) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    coins INT NOT NULL,
+    coins INT,
     language VARCHAR(50),
     points INT,
     PRIMARY KEY (id)
