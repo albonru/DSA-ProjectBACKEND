@@ -1,9 +1,11 @@
 package edu.upc.eetac.dsa.services;
 
 import edu.upc.eetac.dsa.dao.FAQDAO;
+import edu.upc.eetac.dsa.dao.IssueDAO;
 import edu.upc.eetac.dsa.dao.QuestionDAO;
 import edu.upc.eetac.dsa.dao.UserDAO;
 import edu.upc.eetac.dsa.dao.impl.FAQDAOImpl;
+import edu.upc.eetac.dsa.dao.impl.IssueDAOImpl;
 import edu.upc.eetac.dsa.dao.impl.QuestionDAOImpl;
 import edu.upc.eetac.dsa.dao.impl.UserDAOImpl;
 import edu.upc.eetac.dsa.models.FAQ;
@@ -19,23 +21,25 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
+import java.util.List;
 
 @Api(value = "/techhelp", description = "Endpoint to Technical Help Service")
 @Path("/techhelp")
 public class TechHelpService {
 
-    private QuestionDAO manager;
+    private IssueDAO issueManager;
+    private QuestionDAO questionManager;
     private UserDAO userManager;
     private FAQDAO FAQmanager;
 
     public TechHelpService() {
-        this.manager = QuestionDAOImpl.getInstance();
+        this.issueManager = IssueDAOImpl.getInstance();
+        this.questionManager = QuestionDAOImpl.getInstance();
         this.userManager = UserDAOImpl.getInstance();
         this.FAQmanager = FAQDAOImpl.getInstance();
     }
 
-    // ask a question -> ALBA OK NO BBDD
+    // ask a question -> ALBA OK
     @POST
     @ApiOperation(value = "ask question", notes = "")
     @ApiResponses(value = {
@@ -52,12 +56,12 @@ public class TechHelpService {
             return Response.status(500).build();
 
         else {
-            this.manager.addQuestion(question);
+            this.questionManager.addQuestion(question);
             return Response.status(200).entity(question).build();
         }
     }
 
-    // denounce an issue -> IRENE OK NO BBDD
+    // denounce an issue -> IRENE OK
     @POST
     @ApiOperation(value = "denounce issue", notes = "")
     @ApiResponses(value = {
@@ -76,14 +80,11 @@ public class TechHelpService {
         } else if (user == null) {
             return Response.status(404).build();
         }
-        issue.setDate(issue.getDate());
-        issue.setInformer(issue.getInformer());
-        issue.setMessage(issue.getMessage());
-
+        this.issueManager.addIssue(issue);
         return Response.status(200).entity(issue).build();
     }
 
-    // GET all FAQ -> ALVARO OK NO BBDD
+    // GET all FAQ -> ALVARO OK
     @GET
     @ApiOperation(value = "Get all FAQ", notes = " ")
     @ApiResponses(value = {
@@ -93,8 +94,8 @@ public class TechHelpService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllFAQ() {
 
-        ArrayList<FAQ> FAQList = this.FAQmanager.getAllFAQ();
-        GenericEntity<ArrayList<FAQ>> entity = new GenericEntity<ArrayList<FAQ>>(FAQList) {};
+        List<FAQ> FAQList = this.FAQmanager.getAllFAQ();
+        GenericEntity<List<FAQ>> entity = new GenericEntity<List<FAQ>>(FAQList) {};
         return Response.status(201).entity(entity).build();
     }
 

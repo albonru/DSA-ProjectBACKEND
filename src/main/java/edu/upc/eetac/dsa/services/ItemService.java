@@ -77,7 +77,7 @@ public class ItemService {
         }
     }
 
-    // buy item from store --> NOT OK
+    // buy item from store --> OK
     @PUT
     @ApiOperation(value = "Buy an Item", notes = " ")
     @ApiResponses(value = {

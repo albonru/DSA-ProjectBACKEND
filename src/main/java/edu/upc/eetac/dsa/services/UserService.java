@@ -209,7 +209,7 @@ public class UserService {
         return Response.status(201).entity(entity).build();
     }
 
-    // set language for a user -> FERRAN OK
+    // UPDATE language for a user -> FERRAN OK
     @PUT
     @ApiOperation(value = "Update User languaje", notes = "name, language")
     @ApiResponses(value = {

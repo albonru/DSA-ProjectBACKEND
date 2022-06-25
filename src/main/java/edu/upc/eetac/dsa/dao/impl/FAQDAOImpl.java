@@ -3,12 +3,16 @@ package edu.upc.eetac.dsa.dao.impl;
 import edu.upc.eetac.dsa.dao.FAQDAO;
 import edu.upc.eetac.dsa.models.FAQ;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class FAQDAOImpl implements FAQDAO {
     private static FAQDAOImpl manager;
-    ArrayList<FAQ> FAQList = new ArrayList<FAQ>();
-    FAQDAOImpl() {}
+    private SessionImpl session;
+    static final Logger logger = Logger.getLogger(FAQDAOImpl.class.getName());
+
+
+    FAQDAOImpl() {this.session = SessionImpl.getInstance();}
 
     public static FAQDAOImpl getInstance() {
 
@@ -18,16 +22,16 @@ public class FAQDAOImpl implements FAQDAO {
         }
         return manager;
     }
+
     @Override
-    public ArrayList<FAQ> getAllFAQ() {
-        ArrayList<FAQ> List = new ArrayList<FAQ>();
-        List = FAQList;
-        return List;
+    public List<FAQ> getAllFAQ() {
+        List<FAQ> faqList = this.session.getAll(FAQ.class);
+        return faqList;
     }
 
     @Override
     public FAQ addFAQ(FAQ faq) {
-        this.FAQList.add(faq);
+        this.session.save(faq);
         return faq;
     }
 }
