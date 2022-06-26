@@ -1,3 +1,5 @@
+<!-- RANKING NOT OK : FALTEN FER ELS DOS, COINS I POINTS -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,33 +21,84 @@
     </script>-->
 
 </head>
-<body>
+<body onload="getRankings();">
+
+    <!--barra superior-->
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="javascript:void(0)">SUPER MARIO: UNLEASHED</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="mynavbar">
-            <ul class="navbar-nav me-auto">
+            <a class="navbar-brand" href="javascript:void(0)">SUPER MARIO: UNLEASHED</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav me-auto">
 
-              <li class="nav-item">
-                <a class="nav-link" href="inventory.html" href="javascript:void(0)">Inventory</a>
-              </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="inventory.html" href="javascript:void(0)">Inventory</a>
+                    </li>
 
-              <li class="nav-item">
-                <a class="nav-link" href="store.html" href="javascript:void(0)">Store</a>
-              </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="store.html" href="javascript:void(0)">Store</a>
+                    </li>
 
-              <li class="nav-item">
-                <a class="nav-link" href="update.html" href="javascript:void(0)">Update user</a>
-              </li>
-              
-            </ul>
-          </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="update.html" href="javascript:void(0)">Update user</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" onclick="logout()">Log out</a>
+                    </li>
+                    <script>
+                        function logout() {
+                            localStorage.setItem("activeUser", null);
+                            alert('Come back soon!');
+                            window.location.href = "index.html";
+                        }
+                    </script>
+                </ul>
+            </div>
         </div>
-      </nav>
+    </nav>
 
+    <!--Delete user-->
+    <div class="d-grid gap-3">
+        <button type="deleteUser" class="btn btn-warning btn-block " onclick="deleteUser()">Delete user</button>
+    </div>
+    <script>
+      function deleteUser() {
+        var username = localStorage.getItem("activeUser");
+        $.ajax({
+            contentType: "application/json",
+            type: 'DELETE',
+            url: "/dsaApp/user/delete/"+username,
+            dataType: 'json',
+            success: function (result) {
+                alert("User deleted successfully. We are sad to see you go :(");
+                localStorage.setItem("activeUser", null);
+                window.location.href = "index.html";
+            },
+            error : function(error) {
+                alert("User could not be deleted. Please try again later!");
+                window.location.href = "userProfile.html";
+            }
+        });
+      }
+    </script>
+
+    <!--Ranking-->
+    <h1>Rankings</h1>
+    <div class="container">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <td>User</td>
+                    <td>Points</td>
+                </tr>
+            </thead>
+            <tbody id=table>
+            </tbody>
+        </table>
+
+    </div>
 </body>
 </html>
 

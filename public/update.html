@@ -1,3 +1,5 @@
+<!-- UPDATE OK -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +24,7 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="javascript:void(0)">MARIO BROS</a>
+          <a class="navbar-brand" href="javascript:void(0)">SUPER MARIO: UNLEASHED</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -37,31 +39,88 @@
               <li class="nav-item">
                 <a class="nav-link" href="index.html" onclick="logout()">Log out</a>
               </li>
+              <script>
+                function logout() {
+                  localStorage.setItem("activeUser", null);
+                  alert('Come back soon!');
+                  window.location.href = "index.html";
+                }
+              </script>
             </ul>
           </div>
         </div>
       </nav>
+      <div class="d-grid gap-3">
+        <button type="deleteUser" class="btn btn-warning btn-block" href="index.html" onclick="deleteUser()">Delete user</button>
+      </div>
+    <script>
+      function deleteUser() {
+        var username = localStorage.getItem("activeUser");
+        $.ajax({
+            contentType: "application/json",
+            type: 'DELETE',
+            url: "/dsaApp/user/delete/"+username,
+            dataType: 'json',
+            success: function (result) {
+                alert("User deleted successfully. We are sad to see you go :(");
+                localStorage.setItem("activeUser", null);
+                window.location.href = "index.html";
+            },
+            error : function(error) {
+                alert("User could not be deleted. Please try again later!");
+                window.location.href = "userProfile.html";
+            }
+        });
+      }
+    </script>
       
       <div class="container-fluid mt-3">
-        <h2>Modifica usuari</h2>
-        <h5>Canvia els camps que desitgis</h5>
+        <h2>Update user info</h2>
+        <h5>You may change any field you wish</h5>
         <div class="row">
           <div 
-              ><input type="text" class="form-control" id="user" placeholder="Usuari">
+              ><input type="text" class="form-control" id="user" placeholder="User">
           </div>
           <div
-              ><input type="text" class="form-control" id="mail" placeholder="Mail"></div>
+              ><input type="text" class="form-control" id="password" placeholder="Password">
           </div>
           <div
-          ><input type="text" class="form-control" id="password" placeholder="Contarsenya">
+              ><input type="text" class="form-control" id="mail" placeholder="Email"></div>
           </div>
+
           <div 
-              class="col-md-4"><button type="button" id ="buttonS" class="btn btn-primary btn-info">Update</button>
-          </div> 
+              class="col-md-4"><button type="button" id ="buttonS" class="btn btn-primary btn-info" onclick="updateUser()">Update</button>
+          </div>
+        <script>
+          function updateUser() {
+            var oldUsername = localStorage.getItem("activeUser");
+            var username = $('#user').val();
+            var password = $('#password').val();
+            var email = $('#mail').val();
+
+            $.ajax({
+              contentType: "application/json",
+              type: 'PUT',
+              url: "/dsaApp/user/update/"+oldUsername,
+              data: JSON.stringify({username: username, password: password, email: email}),
+              dataType: 'json',
+              success: function (result) {
+              alert("Information updated successfully");
+              localStorage.setItem("activeUser", username);
+              window.location.href = "userProfile.html";
+              },
+              error : function(error) {
+                if (username == "" || password == "" || email == "")
+                  alert("You left something blank. Please try again!");
+                else
+                  alert("Username or email already in use. Please try again!");
+                window.location.href = "update.html";
+              }
+            });
+          }
+        </script>
       </div>
     </div>
 
 </body>
 </html>
-
-
