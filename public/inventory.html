@@ -1,4 +1,4 @@
-<!-- INVENTORY NOT OK : MISSING TABLE -->
+<!-- INVENTORY OK -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,7 @@
 
 
 </head>
-<body onload="setUpInventory();">
+<body>
 
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
@@ -45,58 +45,39 @@
         </div>
     </nav>
 
-    <!--Taula estatica -->
-    <!--
-          <div class="container mt-3">
-            <h3>Inventory</h3>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Product</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>        <img src="images/weapon1.png" class="float-start" alt="Pistola1" width="100" height="100">
-                  </td>
-                  <td>Weapon</td>
-                  <td>Pistola que dura tota la partida</td>
+    <script>
+        function getInventory() {
 
-                </tr>
-                <tr>
-                  <td>        <img src="images/shield.png" class="float-start" alt="Escut" width="100" height="100">
-                  </td>
-                  <td>Shield</td>
-                  <td>Es perd l'escut al xocar amb un goomba/planta</td>
+            var username = localStorage.getItem("activeUser");
 
+            $.ajax({
+            contentType: "application/json",
+            type: 'GET',
+            url: "/dsaApp/item/inventoryList/"+username,
+            dataType: 'json',
+            success: function (result) {
+                var content = "<table><tr><th>Name</th><th>Description</th></tr>"
+                for (let i=0; i<result.length; i++) {
+                    content +=  '<tr><td>' + result[i].name +
+                                '</td><td>' + result[i].description + '</td></tr>';
+                }
+                content += "</table>"
+                $('#inventoryTable').append(content);
+            },
+            error : function(error) {
+                alert("Rankings not available right now. Please try again later!");
+                window.location.href = "userProfile.html";
+            }
+        });
+        }
+    </script>
 
-                </tr>
-                <tr>
-                  <td>        <img src="images/luigi.png" class="float-start" alt="Luigi" width="100" height="100">
-                  </td>
-                  <td>Luigi</td>
-                  <td>Skin</td>
+    <div class="container" id="b">
+        <div
+                class="col-md-4"><button type="button" id ="inventorybtn" class="btn btn-primary btn-warning" onclick="getInventory()">Show inventory items</button>
+        </div>
 
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        -->
-    <div class="container">
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <td>Item</td>
-                    <td>Description</td>
-                    <td>   </td>
-                </tr>
-            </thead>
-            <tbody id=table>
-
-            </tbody>
-        </table>
+        <div id="inventoryTable"></div>
     </div>
 
 </body>

@@ -10,7 +10,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body onload="getShop();">
+<body>
 
     <!--barra superior-->
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -42,70 +42,39 @@
             </div>
         </div>
     </nav>
-
-    <!--taula estatica-->
-    <!--
-    <div class="container mt-3">
-        <h3>Botiga</h3>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Objecte</th>
-                    <th>Nom</th>
-                    <th>Descripcio</th>
-                    <th>Preu</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <img src="images/weapon1.png" class="float-start" alt="Pistola1" width="100" height="100">
-                    </td>
-                    <td>Pistola</td>
-                    <td>Pistola que dura tota la partida</td>
-                    <td>50$</td>
-                    <td><button type="btn" id="btn" class="btn btn-primary btn-warning">Compra</button></td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="images/shield.png" class="float-start" alt="Escut" width="100" height="100">
-                    </td>
-                    <td>Escut</td>
-                    <td>Es perd l'escut al xocar amb un goomba/planta</td>
-                    <td>20$</td>
-                    <td><button type="btn" id="btn" class="btn btn-primary btn-warning">Compra</button></td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="images/luigi.png" class="float-start" alt="Luigi" width="100" height="100">
-                    </td>
-                    <td>Luigi</td>
-                    <td>Skin</td>
-                    <td>200$</td>
-                    <td><button type="btn" id="btn" class="btn btn-primary btn-warning">Compra</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    -->
-
     <!--taula extreta de la api-->
-    <div class="conainer">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Cost</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="body">
-                <!--Function -->
-            </tbody>
-        </table>
 
+    <script>
+        function getStore() {
+
+            $.ajax({
+            contentType: "application/json",
+            type: 'GET',
+            url: "/dsaApp/item/storeList",
+            dataType: 'json',
+            success: function (result) {
+                var content = "<table><tr><th>Name</th><th>Description</th></tr>"
+                for (let i=0; i<result.length; i++) {
+                    content +=  '<tr><td>' + result[i].name +
+                                '</td><td>' + result[i].description + '</td></tr>';
+                }
+                content += "</table>"
+                $('#storeTable').append(content);
+            },
+            error : function(error) {
+                alert("Rankings not available right now. Please try again later!");
+                window.location.href = "userProfile.html";
+            }
+        });
+        }
+    </script>
+
+    <div class="container" id="b4">
+        <div
+                class="col-md-4"><button type="button" id ="storebtn" class="btn btn-primary btn-warning" onclick="getStore()">Show store items</button>
+        </div>
+
+        <div id="storeTable"></div>
     </div>
 
 </body>

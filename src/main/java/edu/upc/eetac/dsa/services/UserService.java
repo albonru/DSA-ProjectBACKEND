@@ -182,7 +182,7 @@ public class UserService {
     @GET
     @ApiOperation(value = "get users by number of coins", notes = "descendent")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
+            @ApiResponse(code = 200, message = "Successful", response = User.class, responseContainer="List"),
     })
     @Path("/coinRanking")
     @Produces(MediaType.APPLICATION_JSON)
@@ -190,14 +190,14 @@ public class UserService {
 
         List<User> coinRanking = this.userManager.getCoinRanking();
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(coinRanking) {};
-        return Response.status(201).entity(entity).build();
+        return Response.status(200).entity(entity).build();
     }
 
     // GET ranking by points -> ADRIAN OK
     @GET
     @ApiOperation(value = "get users by number of points", notes = " ")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
+            @ApiResponse(code = 200, message = "Successful", response = User.class, responseContainer="List"),
     })
     @Path("/pointRanking")
     @Produces(MediaType.APPLICATION_JSON)
@@ -206,7 +206,7 @@ public class UserService {
 
         List<User> pointRanking = this.userManager.getPointRanking();
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(pointRanking) {};
-        return Response.status(201).entity(entity).build();
+        return Response.status(200).entity(entity).build();
     }
 
     // UPDATE language for a user -> FERRAN OK

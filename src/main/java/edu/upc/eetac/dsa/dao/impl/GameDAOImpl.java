@@ -73,7 +73,7 @@ public class GameDAOImpl implements GameDAO {
         }
 
         // if no active game -> initiate one
-        Game game = new Game(user.getId());
+        Game game = new Game(user.getId(), user.getCoins());
         this.saveGame(game);
         return game;
     }

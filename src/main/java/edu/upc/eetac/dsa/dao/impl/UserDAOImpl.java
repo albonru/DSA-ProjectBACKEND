@@ -49,8 +49,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User updateCoins(String name, int coins) throws IntrospectionException {
         User user = this.getUserByName(name);
-        int coinBalance = user.getCoins() + coins;
-        user.setCoins(coinBalance);
+
+        user.setCoins(coins);
         this.session.update(user);
         return user;
     }

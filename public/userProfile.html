@@ -1,4 +1,4 @@
-<!-- RANKING NOT OK : FALTEN FER ELS DOS, COINS I POINTS -->
+<!-- RANKINGS OK -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,18 +10,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-  <!--Per fer visibles
-  <script>
-    $(document).ready(function(){
-        $(".table").hide();
-        $("#fotogit").hide();
-        $("#alertaOK").hide();
-        $("#alertaER").hide();
-    });
-    </script>-->
-
 </head>
-<body onload="getRankings();">
+<body>
 
     <!--barra superior-->
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -84,21 +74,73 @@
       }
     </script>
 
-    <!--Ranking-->
+    <!--Rankings-->
     <h1>Rankings</h1>
-    <div class="container">
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <td>User</td>
-                    <td>Points</td>
-                </tr>
-            </thead>
-            <tbody id=table>
-            </tbody>
-        </table>
 
+    <script>
+        function getPointRanking() {
+            $.ajax({
+            contentType: "application/json",
+            type: 'GET',
+            url: "/dsaApp/user/pointRanking",
+            dataType: 'json',
+            success: function (result) {
+                var content = "<table><tr><th>Points</th><th>User</th></tr>"
+                for (let i=0; i<result.length; i++) {
+                    content +=  '<tr><td>' + result[i].points +
+                                '</td><td>' + result[i].name + '</td></tr>';
+                }
+                content += "</table>"
+                $('#pointsTable').append(content);
+            },
+            error : function(error) {
+                alert("Rankings not available right now. Please try again later!");
+                window.location.href = "userProfile.html";
+            }
+        });
+        }
+    </script>
+
+    <script>
+        function getCoinRanking() {
+            $.ajax({
+            contentType: "application/json",
+            type: 'GET',
+            url: "/dsaApp/user/coinRanking,
+            dataType: 'json',
+            success: function (result) {
+                var content = "<table><tr><th>Coins</th><th>User</th></tr>"
+                for (let i=0; i<result.length; i++) {
+                    content +=  '<tr><td>' + result[i].coins +
+                                '</td><td>' + result[i].name + '</td></tr>';
+                }
+                content += "</table>"
+                $('#coinsTable').append(content);
+            },
+            error : function(error) {
+                alert("Rankings not available right now. Please try again later!");
+                window.location.href = "userProfile.html";
+            }
+        });
+        }
+    </script>
+    <div class="container" id="b1">
+        <h1>POINTS RANKING</h1>
+        <div
+                class="col-md-4"><button type="button" id ="buttonRP" class="btn btn-primary btn-warning" onclick="getPointRanking()">Show point ranking</button>
+        </div>
+
+        <div id="pointsTable"></div>
     </div>
+
+    <div class="container" id="b2">
+        <h2>COINS RANKING</h2>
+        <div
+            class="col-md-4"><button type="button" id ="buttonRC" class="btn btn-primary btn-warning" onclick="getCoinRanking()">Show coins ranking</button>
+        </div>
+        <div id="coinsTable"></div>
+    </div>
+
 </body>
 </html>
 
