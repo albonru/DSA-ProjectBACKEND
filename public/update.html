@@ -11,7 +11,22 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 </head>
+<body style="background-color: rgb(224, 255, 255);">
 <body>
+
+
+    <!-- barra inferior-->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom">
+        <a class="navbar-brand" href="#">
+            <div class="icono">
+                <div class="media-left">
+                    <img src="https://eetac.upc.edu/ca/noticies/eetac.png" class="media-object" style="width:230px">
+                </div>
+            </div>
+        </a>
+    </nav>
+
+    <!--barra superior-->
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="javascript:void(0)">SUPER MARIO: UNLEASHED</a>
@@ -19,24 +34,49 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="mynavbar">
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="inventory.html" href="javascript:void(0)">Inventory</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="store.html" href="javascript:void(0)">Store</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="index.html" onclick="logout()">Log out</a>
-              </li>
-              <script>
-                function logout() {
-                  localStorage.setItem("activeUser", null);
-                  alert('Come back soon!');
-                  window.location.href = "index.html";
-                }
-              </script>
-            </ul>
+              <ul class="navbar-nav me-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="inventory.html" href="javascript:void(0)">Inventory</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="store.html" href="javascript:void(0)">Store</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="index.html" onclick="logout()">Log out</a>
+                  </li>
+
+                  <script>
+                      function logout() {
+                          localStorage.setItem("activeUser", null);
+                          alert('Come back soon!');
+                          window.location.href = "index.html";
+                      }
+                  </script>
+
+                  <li class="nav-item">
+                      <!-- Button to Open the Modal -->
+                      <button type="button" class="btn btn-light" data-toggle="modal" data-target="#myModal">  About the game </button>
+                      <!-- The Modal -->
+                      <div class="modal" id="myModal">
+                          <div class="modal-dialog">
+                              <div class="modal-content">
+                                  <!-- Modal Header -->
+                                  <div class="modal-header">
+                                      <h3 class="modal-title">
+                                          Super Mario</h4>
+                                          <button type="button" id="btnR" class="close" data-dismiss="modal">×</button>
+                                  </div>
+                                  <!-- Modal body -->
+                                  <div class="modal-body">
+                                      <p>
+                                          explicar alguna cosa
+                                      </p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </li>
+              </ul>
           </div>
         </div>
       </nav>
@@ -79,7 +119,7 @@
           </div>
 
           <div 
-              class="col-md-4"><button type="button" id ="buttonS" class="btn btn-primary btn-info" onclick="updateUser()">Update</button>
+              class="col-md-4"><button type="button" id ="buttonS" class="btn btn-warning btn-block" onclick="updateUser()">Update</button>
           </div>
         <script>
           function updateUser() {

@@ -3,105 +3,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Store</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="./css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Store</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body style="background-color: rgb(224, 255, 255);">
 
-    <!--barra superior-->
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="javascript:void(0)">SUPER MARIO: UNLEASHED</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mynavbar">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="inventory.html" href="javascript:void(0)">Inventory</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="update.html" href="javascript:void(0)">Update user</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html" onclick="logout()">Log out</a>
-                    </li>
-                    <script>
-                        function logout() {
-                            localStorage.setItem("activeUser", null);
-                            alert('Come back soon!');
-                            window.location.href = "index.html";
-                        }
-                    </script>
-                </ul>
+    <body>
 
+        <!-- barra inferior-->
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom">
+            <a class="navbar-brand" href="#">
+                <div class="icono">
+                    <div class="media-left">
+                        <img src="https://eetac.upc.edu/ca/noticies/eetac.png" class="media-object" style="width:230px">
+                    </div>
+                </div>
+            </a>
+        </nav>
+
+        <!--barra superior-->
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="javascript:void(0)">SUPER MARIO: UNLEASHED</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mynavbar">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="inventory.html" href="javascript:void(0)">Inventory</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="update.html" href="javascript:void(0)">Update user</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html" onclick="logout()">Log out</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Button to Open the Modal -->
+                            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#myModal">  About the game </button>
+                            <!-- The Modal -->
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h3 class="modal-title">
+                                                Super Mario</h4>
+                                                <button type="button" id="btnR" class="close" data-dismiss="modal">×</button>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <p>
+                                                explicar alguna cosa
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <script>
+                            function logout() {
+                                localStorage.setItem("activeUser", null);
+                                alert('Come back soon!');
+                                window.location.href = "index.html";
+                            }
+                        </script>
+                    </ul>
+
+                </div>
             </div>
-        </div>
-    </nav>
-    <!--taula extreta de la api-->
+        </nav>
+        <!--taula extreta de la api-->
 
-    <script>
-        function getStore() {
+        <script>
+            function getStore() {
 
-            $.ajax({
-            contentType: "application/json",
-            type: 'GET',
-            url: "/dsaApp/item/storeList",
-            dataType: 'json',
-            success: function (result) {
-                var content = "<table><tr><th></th><th>Name</th><th>Description</th><th>Price</th></tr>"
-                for (let i=0; i<result.length; i++) {
-                    content +=  '<tr><td>' + '<img src="' + result[i].avatar + '" class="float-start" width="50" height="50">' +
+                $.ajax({
+                    contentType: "application/json",
+                    type: 'GET',
+                    url: "/dsaApp/item/storeList",
+                    dataType: 'json',
+                    success: function (result) {
+                        var content = "<table><tr><th></th><th>Name</th><th>Description</th><th>Price</th></tr>"
+                        for (let i = 0; i < result.length; i++) {
+                            content += '<tr><td>' + '<img src="' + result[i].avatar + '" class="float-start" width="50" height="50">' +
                                 '</td><td>' + result[i].name +
                                 '</td><td>' + result[i].description +
                                 '</td><td>' + result[i].price +
                                 '</td><td>' + '<button type="button" id="' + result[i].name +
                                 '" onclick="buy(this.id)">Buy item</button>' + '</td></tr>';
-                }
-                content += "</table>"
-                $('#storeTable').append(content);
-            },
-            error : function(error) {
-                alert("Rankings not available right now. Please try again later!");
-                window.location.href = "userProfile.html";
+                        }
+                        content += "</table>"
+                        $('#storeTable').append(content);
+                    },
+                    error: function (error) {
+                        alert("Rankings not available right now. Please try again later!");
+                        window.location.href = "userProfile.html";
+                    }
+                });
             }
-        });
-        }
-    </script>
+        </script>
 
-    <script>
-        function buy(item) {
-            var username = localStorage.getItem("activeUser");
-            var itemname = item;
+        <script>
+            function buy(item) {
+                var username = localStorage.getItem("activeUser");
+                var itemname = item;
 
-            $.ajax({
-            contentType: "application/json",
-            type: 'PUT',
-            url: "/dsaApp/item/buyItem/"+itemname+"/"+username,
-            dataType: 'json',
-            success: function (result) {
-                alert(itemname + ' bought successfully');
-                window.location.href = "store.html";
-            },
-            error : function(error) {
-                alert('Purchase failed :( Please check if you have enough coins');
-        }
-    });
-        }
-    </script>
+                $.ajax({
+                    contentType: "application/json",
+                    type: 'PUT',
+                    url: "/dsaApp/item/buyItem/" + itemname + "/" + username,
+                    dataType: 'json',
+                    success: function (result) {
+                        alert(itemname + ' bought successfully');
+                        window.location.href = "store.html";
+                    },
+                    error: function (error) {
+                        alert('Purchase failed :( Please check if you have enough coins');
+                    }
+                });
+            }
+        </script>
 
-    <div class="container" id="b4">
-        <div
-                class="col-md-4"><button type="button" id ="storebtn" class="btn btn-primary btn-warning" onclick="getStore()">Show store items</button>
+        <div class="d-grid gap-3">
+            <button type="button" id="storebtn" class="btn btn-warning btn-block" onclick="getStore()">Show store items</button>
         </div>
 
-        <div id="storeTable"></div>
-    </div>
+        <div class="container" id="b4">
+            <table class="table table-striped" id="storeTable"></table>
+        </div>
 
-</body>
+    </body>
 </html>
 
