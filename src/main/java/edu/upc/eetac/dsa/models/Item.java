@@ -10,6 +10,7 @@ public class Item {
     private String type;
     private int damage;
     private int dmgReduction;
+    private String avatar;
 
     public Item() {}
 
@@ -21,6 +22,15 @@ public class Item {
         this.type = type;
         this.damage = damage;
         this.dmgReduction = dmgReduction;
+        this.avatar = "images/" + name + ".png";
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getId() {
@@ -81,14 +91,15 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{ID: "+ this.id + '\'' +
-                ", name ='" + this.name + '\'' +
-                ", type ='" + this.type + '\'' +
-                ", price ='" + this.price + '\'' +
-                ", description ='" + this.description + '\'' +
-                ", damage ='" + this.damage + '\'' +
-                ", dmgReduction ='" + this.dmgReduction + '\'' +
+        return "Item{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", type='" + type + '\'' +
+                ", damage=" + damage +
+                ", dmgReduction=" + dmgReduction +
+                ", avatar='" + avatar + '\'' +
                 '}';
-
     }
 }
