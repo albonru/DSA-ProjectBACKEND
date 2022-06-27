@@ -85,9 +85,10 @@
             url: "/dsaApp/user/pointRanking",
             dataType: 'json',
             success: function (result) {
-                var content = "<table><tr><th>Points</th><th>User</th></tr>"
+                var content = "<table><tr><th></th><th>Points</th><th>User</th></tr>"
                 for (let i=0; i<result.length; i++) {
-                    content +=  '<tr><td>' + result[i].points +
+                    content +=  '<tr><td>' + '<img src="images/avatar.jpg" class="float-start" width="50" height="50">' +
+                                '</td><td>' + result[i].points +
                                 '</td><td>' + result[i].name + '</td></tr>';
                 }
                 content += "</table>"
@@ -106,12 +107,13 @@
             $.ajax({
             contentType: "application/json",
             type: 'GET',
-            url: "/dsaApp/user/coinRanking,
+            url: "/dsaApp/user/coinRanking",
             dataType: 'json',
             success: function (result) {
                 var content = "<table><tr><th>Coins</th><th>User</th></tr>"
                 for (let i=0; i<result.length; i++) {
-                    content +=  '<tr><td>' + result[i].coins +
+                    content +=  '<tr><td>' + '<img src="images/avatar.jpg" class="float-start" width="50" height="50">' +
+                                '</td><td>' + result[i].coins +
                                 '</td><td>' + result[i].name + '</td></tr>';
                 }
                 content += "</table>"

@@ -1,4 +1,4 @@
-<!-- STORE NOT OK : MISSING TABLE -->
+<!-- STORE OK -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,10 +53,13 @@
             url: "/dsaApp/item/storeList",
             dataType: 'json',
             success: function (result) {
-                var content = "<table><tr><th>Name</th><th>Description</th></tr>"
+                var content = "<table><tr><th>Name</th><th>Description</th><th>Price</th></tr>"
                 for (let i=0; i<result.length; i++) {
                     content +=  '<tr><td>' + result[i].name +
-                                '</td><td>' + result[i].description + '</td></tr>';
+                                '</td><td>' + result[i].description +
+                                '</td><td>' + result[i].price +
+                                '</td><td>' + '<button type="button" id="' + result[i].name +
+                                '" onclick="buy(this.id)">Buy item</button>' + '</td></tr>';
                 }
                 content += "</table>"
                 $('#storeTable').append(content);
@@ -66,6 +69,29 @@
                 window.location.href = "userProfile.html";
             }
         });
+        }
+    </script>
+
+    <script>
+        function buy(item) {
+            var username = localStorage.getItem("activeUser");
+            var itemname = item;
+
+            alert(item);
+
+            $.ajax({
+            contentType: "application/json",
+            type: 'PUT',
+            url: "/dsaApp/item/buyItem/"+itemname+"/"+username,
+            dataType: 'json',
+            success: function (result) {
+                alert(itemname + ' bought successfully');
+                window.location.href = "store.html";
+            },
+            error : function(error) {
+                alert('Purchase failed :( Please check if you have enough coins');
+        }
+    });
         }
     </script>
 
