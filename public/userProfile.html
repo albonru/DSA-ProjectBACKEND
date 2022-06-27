@@ -11,138 +11,179 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 </head>
-<body>
+<body style="background-color: rgb(224, 255, 255);">
 
-    <!--barra superior-->
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="javascript:void(0)">SUPER MARIO: UNLEASHED</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mynavbar">
-                <ul class="navbar-nav me-auto">
+    <body>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="inventory.html" href="javascript:void(0)">Inventory</a>
-                    </li>
+        <!-- barra inferior-->
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom">
+            <a class="navbar-brand" href="#">
+                <div class="icono">
+                    <div class="media-left">
+                        <img src="https://eetac.upc.edu/ca/noticies/eetac.png" class="media-object" style="width:230px">
+                    </div>
+                </div>
+            </a>
+        </nav>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="store.html" href="javascript:void(0)">Store</a>
-                    </li>
+        <!--barra superior-->
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="javascript:void(0)">SUPER MARIO: UNLEASHED</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mynavbar">
+                    <ul class="navbar-nav me-auto">
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="update.html" href="javascript:void(0)">Update user</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html" onclick="logout()">Log out</a>
-                    </li>
-                    <script>
-                        function logout() {
-                            localStorage.setItem("activeUser", null);
-                            alert('Come back soon!');
-                            window.location.href = "index.html";
-                        }
-                    </script>
-                </ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="inventory.html" href="javascript:void(0)">Inventory</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="store.html" href="javascript:void(0)">Store</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="update.html" href="javascript:void(0)">Update user</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html" onclick="logout()">Log out</a>
+                        </li>
+                        <script>
+                            function logout() {
+                                localStorage.setItem("activeUser", null);
+                                alert('Come back soon!');
+                                window.location.href = "index.html";
+                            }
+                        </script>
+                        <li class="nav-item">
+                            <!-- Button to Open the Modal -->
+                            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#myModal">  About the game </button>
+                            <!-- The Modal -->
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h3 class="modal-title">
+                                                Super Mario</h4>
+                                                <button type="button" id="btnR" class="close" data-dismiss="modal">×</button>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <p>
+                                                explicar alguna cosa
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
+        </nav>
+
+        <!--Delete user-->
+        <div class="d-grid gap-3">
+            <button type="deleteUser" class="btn btn-warning btn-block " onclick="deleteUser()">Delete user</button>
         </div>
-    </nav>
-
-    <!--Delete user-->
-    <div class="d-grid gap-3">
-        <button type="deleteUser" class="btn btn-warning btn-block " onclick="deleteUser()">Delete user</button>
-    </div>
-    <script>
-      function deleteUser() {
-        var username = localStorage.getItem("activeUser");
-        $.ajax({
-            contentType: "application/json",
-            type: 'DELETE',
-            url: "/dsaApp/user/delete/"+username,
-            dataType: 'json',
-            success: function (result) {
-                alert("User deleted successfully. We are sad to see you go :(");
-                localStorage.setItem("activeUser", null);
-                window.location.href = "index.html";
-            },
-            error : function(error) {
-                alert("User could not be deleted. Please try again later!");
-                window.location.href = "userProfile.html";
+        <script>
+            function deleteUser() {
+                var username = localStorage.getItem("activeUser");
+                $.ajax({
+                    contentType: "application/json",
+                    type: 'DELETE',
+                    url: "/dsaApp/user/delete/" + username,
+                    dataType: 'json',
+                    success: function (result) {
+                        alert("User deleted successfully. We are sad to see you go :(");
+                        localStorage.setItem("activeUser", null);
+                        window.location.href = "index.html";
+                    },
+                    error: function (error) {
+                        alert("User could not be deleted. Please try again later!");
+                        window.location.href = "userProfile.html";
+                    }
+                });
             }
-        });
-      }
-    </script>
+        </script>
 
-    <!--Rankings-->
-    <h1>Rankings</h1>
+        <!--Rankings-->
+        <center>
+            <h1>Rankings</h1>
+        </center>
 
-    <script>
-        function getPointRanking() {
-            $.ajax({
-            contentType: "application/json",
-            type: 'GET',
-            url: "/dsaApp/user/pointRanking",
-            dataType: 'json',
-            success: function (result) {
-                var content = "<table><tr><th></th><th>Points</th><th>User</th></tr>"
-                for (let i=0; i<result.length; i++) {
-                    content +=  '<tr><td>' + '<img src="images/avatar.jpg" class="float-start" width="50" height="50">' +
+        <script>
+            function getPointRanking() {
+                $.ajax({
+                    contentType: "application/json",
+                    type: 'GET',
+                    url: "/dsaApp/user/pointRanking",
+                    dataType: 'json',
+                    success: function (result) {
+                        var content = "<table><tr><th></th><th>Points</th><th>User</th></tr>"
+                        for (let i = 0; i < result.length; i++) {
+                            content += '<tr><td>' + '<img src="images/avatar.jpg" class="float-start" width="50" height="50">' +
                                 '</td><td>' + result[i].points +
                                 '</td><td>' + result[i].name + '</td></tr>';
-                }
-                content += "</table>"
-                $('#pointsTable').append(content);
-            },
-            error : function(error) {
-                alert("Rankings not available right now. Please try again later!");
-                window.location.href = "userProfile.html";
+                        }
+                        content += "</table>"
+                        $('#pointsTable').append(content);
+                    },
+                    error: function (error) {
+                        alert("Rankings not available right now. Please try again later!");
+                        window.location.href = "userProfile.html";
+                    }
+                });
             }
-        });
-        }
-    </script>
+        </script>
 
-    <script>
-        function getCoinRanking() {
-            $.ajax({
-            contentType: "application/json",
-            type: 'GET',
-            url: "/dsaApp/user/coinRanking",
-            dataType: 'json',
-            success: function (result) {
-                var content = "<table><tr><th>Coins</th><th>User</th></tr>"
-                for (let i=0; i<result.length; i++) {
-                    content +=  '<tr><td>' + '<img src="images/avatar.jpg" class="float-start" width="50" height="50">' +
+        <script>
+            function getCoinRanking() {
+                $.ajax({
+                    contentType: "application/json",
+                    type: 'GET',
+                    url: "/dsaApp/user/coinRanking",
+                    dataType: 'json',
+                    success: function (result) {
+                        var content = "<table><tr><th>Coins</th><th>User</th></tr>"
+                        for (let i = 0; i < result.length; i++) {
+                            content += '<tr><td>' + '<img src="images/avatar.jpg" class="float-start" width="50" height="50">' +
                                 '</td><td>' + result[i].coins +
                                 '</td><td>' + result[i].name + '</td></tr>';
-                }
-                content += "</table>"
-                $('#coinsTable').append(content);
-            },
-            error : function(error) {
-                alert("Rankings not available right now. Please try again later!");
-                window.location.href = "userProfile.html";
+                        }
+                        content += "</table>"
+                        $('#coinsTable').append(content);
+                    },
+                    error: function (error) {
+                        alert("Rankings not available right now. Please try again later!");
+                        window.location.href = "userProfile.html";
+                    }
+                });
             }
-        });
-        }
-    </script>
-    <div class="container" id="b1">
-        <h1>POINTS RANKING</h1>
-        <div
-                class="col-md-4"><button type="button" id ="buttonRP" class="btn btn-primary btn-warning" onclick="getPointRanking()">Show point ranking</button>
+        </script>
+        <div class="container" id="b1">
+            <h5>POINTS RANKING</h5>
+            <div class="col-md-4">
+                <button type="button" id="buttonRP" class="btn btn-primary btn-warning" onclick="getPointRanking()">Show point ranking</button>
+            </div>
+
+            <table class="table table-striped" id="pointsTable">
+
+            </table>
         </div>
 
-        <div id="pointsTable"></div>
-    </div>
-
-    <div class="container" id="b2">
-        <h2>COINS RANKING</h2>
-        <div
-            class="col-md-4"><button type="button" id ="buttonRC" class="btn btn-primary btn-warning" onclick="getCoinRanking()">Show coins ranking</button>
+        <div class="container" id="b2">
+            <h5>COINS RANKING</h5>
+            <div class="col-md-4">
+                <button type="button" id="buttonRC" class="btn btn-primary btn-warning" onclick="getCoinRanking()">Show coins ranking</button>
+            </div>
+            <table class="table table-striped" id="coinsTable"></table>
         </div>
-        <div id="coinsTable"></div>
-    </div>
 
-</body>
+    </body>
 </html>
+
 
