@@ -56,9 +56,10 @@
             url: "/dsaApp/item/inventoryList/"+username,
             dataType: 'json',
             success: function (result) {
-                var content = "<table><tr><th>Name</th><th>Description</th></tr>"
+                var content = "<table><tr><th></th><th>Name</th><th>Description</th></tr>"
                 for (let i=0; i<result.length; i++) {
-                    content +=  '<tr><td>' + result[i].name +
+                    content +=  '<tr><td>' + '<img src="' + result[i].avatar + '" class="float-start" width="50" height="50">' +
+                                '</td><td>' + result[i].name +
                                 '</td><td>' + result[i].description + '</td></tr>';
                 }
                 content += "</table>"

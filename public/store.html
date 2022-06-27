@@ -53,9 +53,10 @@
             url: "/dsaApp/item/storeList",
             dataType: 'json',
             success: function (result) {
-                var content = "<table><tr><th>Name</th><th>Description</th><th>Price</th></tr>"
+                var content = "<table><tr><th></th><th>Name</th><th>Description</th><th>Price</th></tr>"
                 for (let i=0; i<result.length; i++) {
-                    content +=  '<tr><td>' + result[i].name +
+                    content +=  '<tr><td>' + '<img src="' + result[i].avatar + '" class="float-start" width="50" height="50">' +
+                                '</td><td>' + result[i].name +
                                 '</td><td>' + result[i].description +
                                 '</td><td>' + result[i].price +
                                 '</td><td>' + '<button type="button" id="' + result[i].name +
@@ -76,8 +77,6 @@
         function buy(item) {
             var username = localStorage.getItem("activeUser");
             var itemname = item;
-
-            alert(item);
 
             $.ajax({
             contentType: "application/json",
