@@ -11,7 +11,7 @@ public class FactorySession {
 
         Connection conn = null;
         Properties properties = new Properties();
-        properties.setProperty("user","root");
+        properties.setProperty("user","alba");
         properties.setProperty("password","Mario72");
         try {
             conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/mariodb", properties);
